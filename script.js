@@ -1,10 +1,6 @@
 // ==========================================
-// DESAFÍO MENTAL - SCRIPT PRINCIPAL
+// DESAFÍO MENTAL - SCRIPT.JS
 // ==========================================
-
-// ---------- ESTADO DEL JUEGO ----------
-
-let currentScreen = "homeScreen";
 
 let playerName = "";
 let selectedCategory = "mixed";
@@ -15,38 +11,39 @@ let currentQuestion = 0;
 let score = 0;
 let correctAnswers = 0;
 let wrongAnswers = 0;
-let timeLeft = 20;
+let timeLeft = 15;
 let timer = null;
 
 let musicEnabled = true;
 let vibrationEnabled = true;
 
-let isMultiplayer = false;
 let roomCode = "";
 let isHost = false;
 
-// ---------- ELEMENTOS ----------
+
+// ==========================================
+// ELEMENTOS
+// ==========================================
 
 const music = document.getElementById("backgroundMusic");
 
 
 // ==========================================
-// CAMBIAR DE PANTALLA
+// PANTALLAS
 // ==========================================
 
-function showScreen(screenId) {
+function showScreen(id) {
 
     document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.remove("active");
         screen.classList.add("hidden");
     });
 
-    const screen = document.getElementById(screenId);
+    const screen = document.getElementById(id);
 
     if (screen) {
         screen.classList.remove("hidden");
         screen.classList.add("active");
-        currentScreen = screenId;
     }
 }
 
@@ -56,28 +53,39 @@ function showScreen(screenId) {
 // ==========================================
 
 function openPlayerScreen() {
-    isMultiplayer = false;
     showScreen("playerScreen");
 
-    const nameInput = document.getElementById("playerName");
+    const input = document.getElementById("playerName");
 
-    if (nameInput) {
-        setTimeout(() => nameInput.focus(), 200);
+    if (input) {
+        setTimeout(() => input.focus(), 200);
     }
 }
 
 
-function startSinglePlayer() {
+function continueToCategories() {
 
     const input = document.getElementById("playerName");
 
-    playerName = input && input.value.trim()
-        ? input.value.trim()
-        : "Jugador";
+    if (!input) return;
 
-    isMultiplayer = false;
+    playerName = input.value.trim();
+
+    if (playerName === "") {
+        playerName = "Jugador";
+    }
 
     showScreen("categoryScreen");
+}
+
+
+function goHome() {
+
+    clearInterval(timer);
+
+    stopMusic();
+
+    showScreen("homeScreen");
 }
 
 
@@ -94,7 +102,7 @@ function selectCategory(category) {
     });
 
     const selected = document.querySelector(
-        `.category-card[data-category="${category}"]`
+        `.category-card[onclick="selectCategory('${category}')"]`
     );
 
     if (selected) {
@@ -105,27 +113,43 @@ function selectCategory(category) {
 }
 
 
+function openCategoryScreen() {
+    showScreen("categoryScreen");
+}
+
+
 // ==========================================
-// CANTIDAD DE PREGUNTAS
+// CANTIDAD
 // ==========================================
 
-function selectAmount(amount) {
+function startGame(amount) {
 
     selectedAmount = Number(amount);
 
-    document.querySelectorAll(".amount-btn").forEach(button => {
-        button.classList.remove("selected");
-    });
+    prepareQuestions();
 
-    const selected = document.querySelector(
-        `.amount-btn[data-amount="${amount}"]`
-    );
-
-    if (selected) {
-        selected.classList.add("selected");
+    if (gameQuestions.length === 0) {
+        alert("No hay preguntas disponibles.");
+        showScreen("categoryScreen");
+        return;
     }
 
-    startGame();
+    currentQuestion = 0;
+    score = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
+
+    showScreen("gameScreen");
+
+    const opponentBar = document.getElementById("opponentBar");
+
+    if (opponentBar) {
+        opponentBar.classList.add("hidden");
+    }
+
+    startMusic();
+
+    showQuestion();
 }
 
 
@@ -140,55 +164,22 @@ function prepareQuestions() {
     if (selectedCategory !== "mixed") {
 
         available = available.filter(
-            question => question.category === selectedCategory
+            question =>
+                question.category === selectedCategory
         );
     }
 
-    // Mezclar preguntas
+    // Mezclar
     available.sort(() => Math.random() - 0.5);
 
-    // Si una categoría tiene menos preguntas
-    // que las solicitadas, usamos las disponibles.
+    // Si hay menos preguntas disponibles,
+    // usamos todas las disponibles.
     const amount = Math.min(
         selectedAmount,
         available.length
     );
 
     gameQuestions = available.slice(0, amount);
-}
-
-
-// ==========================================
-// INICIAR JUEGO
-// ==========================================
-
-function startGame() {
-
-    clearInterval(timer);
-
-    prepareQuestions();
-
-    if (gameQuestions.length === 0) {
-
-        alert("No hay preguntas disponibles para esta categoría.");
-
-        showScreen("categoryScreen");
-
-        return;
-    }
-
-    currentQuestion = 0;
-    score = 0;
-    correctAnswers = 0;
-    wrongAnswers = 0;
-
-    showScreen("gameScreen");
-
-    updateScore();
-
-    showQuestion();
-
-    startMusic();
 }
 
 
@@ -205,44 +196,80 @@ function showQuestion() {
         return;
     }
 
-    const question = gameQuestions[currentQuestion];
+    const question =
+        gameQuestions[currentQuestion];
 
-    const questionNumber = document.getElementById("questionNumber");
-    const questionText = document.getElementById("questionText");
-    const categoryLabel = document.getElementById("categoryLabel");
+    // Número de pregunta
+    const counter =
+        document.getElementById("questionCounter");
 
-    if (questionNumber) {
-        questionNumber.textContent =
-            `${currentQuestion + 1} / ${gameQuestions.length}`;
+    if (counter) {
+        counter.textContent =
+            `Pregunta ${currentQuestion + 1} de ${gameQuestions.length}`;
     }
+
+
+    // Barra de progreso
+    const progress =
+        document.getElementById("progressFill");
+
+    if (progress) {
+
+        const percentage =
+            ((currentQuestion) /
+            gameQuestions.length) * 100;
+
+        progress.style.width =
+            `${percentage}%`;
+    }
+
+
+    // Categoría
+    const category =
+        document.getElementById("currentCategory");
+
+    if (category) {
+        category.textContent =
+            getCategoryName(question.category).toUpperCase();
+    }
+
+
+    // Pregunta
+    const questionText =
+        document.getElementById("questionText");
 
     if (questionText) {
-        questionText.textContent = question.question;
+        questionText.textContent =
+            question.question;
     }
 
-    if (categoryLabel) {
-        categoryLabel.textContent =
-            getCategoryName(question.category);
-    }
 
-    const answerButtons =
-        document.querySelectorAll(".answer-btn");
+    // Respuestas
+    for (let i = 0; i < 4; i++) {
 
-    answerButtons.forEach((button, index) => {
+        const answer =
+            document.getElementById(`answer${i}`);
 
-        button.disabled = false;
+        const button =
+            answer ? answer.closest(".answer") : null;
 
-        button.classList.remove(
-            "correct",
-            "wrong",
-            "disabled"
-        );
-
-        if (question.answers[index]) {
-            button.textContent =
-                `${String.fromCharCode(65 + index)}. ${question.answers[index]}`;
+        if (answer) {
+            answer.textContent =
+                question.answers[i];
         }
-    });
+
+        if (button) {
+
+            button.disabled = false;
+
+            button.classList.remove(
+                "correct",
+                "wrong",
+                "disabled"
+            );
+        }
+    }
+
 
     updateScore();
 
@@ -281,7 +308,7 @@ function startTimer() {
 
     clearInterval(timer);
 
-    timeLeft = 20;
+    timeLeft = 15;
 
     updateTimer();
 
@@ -308,8 +335,9 @@ function updateTimer() {
         document.getElementById("timer");
 
     if (timerElement) {
+
         timerElement.textContent =
-            timeLeft;
+            `⏱️ ${timeLeft}`;
     }
 }
 
@@ -324,14 +352,17 @@ function timeOut() {
         gameQuestions[currentQuestion];
 
     const buttons =
-        document.querySelectorAll(".answer-btn");
+        document.querySelectorAll(".answer");
 
     buttons.forEach(button => {
+
         button.disabled = true;
+
         button.classList.add("disabled");
     });
 
     if (buttons[question.correct]) {
+
         buttons[question.correct]
             .classList.add("correct");
     }
@@ -346,7 +377,7 @@ function timeOut() {
 
         showQuestion();
 
-    }, 1200);
+    }, 1000);
 }
 
 
@@ -354,9 +385,12 @@ function timeOut() {
 // RESPONDER
 // ==========================================
 
-function answerQuestion(answerIndex) {
+function selectAnswer(index) {
 
-    if (currentQuestion >= gameQuestions.length) {
+    if (
+        currentQuestion >=
+        gameQuestions.length
+    ) {
         return;
     }
 
@@ -366,26 +400,23 @@ function answerQuestion(answerIndex) {
         gameQuestions[currentQuestion];
 
     const buttons =
-        document.querySelectorAll(".answer-btn");
+        document.querySelectorAll(".answer");
 
     buttons.forEach(button => {
         button.disabled = true;
     });
 
-    const selectedButton =
-        buttons[answerIndex];
 
-    const correctButton =
-        buttons[question.correct];
-
-    if (answerIndex === question.correct) {
-
-        score += 100 + (timeLeft * 5);
+    if (index === question.correct) {
 
         correctAnswers++;
 
-        if (selectedButton) {
-            selectedButton.classList.add("correct");
+        // Más puntos mientras más rápido respondas
+        score += 100 + (timeLeft * 5);
+
+        if (buttons[index]) {
+            buttons[index]
+                .classList.add("correct");
         }
 
         vibrate([50]);
@@ -394,12 +425,14 @@ function answerQuestion(answerIndex) {
 
         wrongAnswers++;
 
-        if (selectedButton) {
-            selectedButton.classList.add("wrong");
+        if (buttons[index]) {
+            buttons[index]
+                .classList.add("wrong");
         }
 
-        if (correctButton) {
-            correctButton.classList.add("correct");
+        if (buttons[question.correct]) {
+            buttons[question.correct]
+                .classList.add("correct");
         }
 
         vibrate([100, 50, 100]);
@@ -418,13 +451,13 @@ function answerQuestion(answerIndex) {
 
 
 // ==========================================
-// ACTUALIZAR PUNTOS
+// PUNTUACIÓN
 // ==========================================
 
 function updateScore() {
 
     const scoreElement =
-        document.getElementById("score");
+        document.getElementById("gameScore");
 
     if (scoreElement) {
         scoreElement.textContent = score;
@@ -433,7 +466,7 @@ function updateScore() {
 
 
 // ==========================================
-// FINAL DEL JUEGO
+// FINAL
 // ==========================================
 
 function finishGame() {
@@ -444,43 +477,78 @@ function finishGame() {
 
     showScreen("resultScreen");
 
+
     const total =
         gameQuestions.length;
 
     const accuracy =
         total > 0
-            ? Math.round((correctAnswers / total) * 100)
+            ? Math.round(
+                (correctAnswers / total) * 100
+            )
             : 0;
+
 
     const finalScore =
         document.getElementById("finalScore");
 
-    const correctElement =
+    const correct =
         document.getElementById("correctAnswers");
 
-    const wrongElement =
+    const wrong =
         document.getElementById("wrongAnswers");
 
     const accuracyElement =
         document.getElementById("accuracy");
 
+    const message =
+        document.getElementById("resultMessage");
+
+
     if (finalScore) {
         finalScore.textContent = score;
     }
 
-    if (correctElement) {
-        correctElement.textContent =
-            correctAnswers;
+    if (correct) {
+        correct.textContent = correctAnswers;
     }
 
-    if (wrongElement) {
-        wrongElement.textContent =
-            wrongAnswers;
+    if (wrong) {
+        wrong.textContent = wrongAnswers;
     }
 
     if (accuracyElement) {
         accuracyElement.textContent =
             `${accuracy}%`;
+    }
+
+
+    if (message) {
+
+        if (accuracy >= 90) {
+            message.textContent =
+                "🔥 ¡Excelente! Eres una máquina.";
+        }
+        else if (accuracy >= 70) {
+            message.textContent =
+                "👏 ¡Muy buen trabajo!";
+        }
+        else if (accuracy >= 50) {
+            message.textContent =
+                "💪 ¡Vas por buen camino!";
+        }
+        else {
+            message.textContent =
+                "🧠 ¡Sigue practicando!";
+        }
+    }
+
+
+    const progress =
+        document.getElementById("progressFill");
+
+    if (progress) {
+        progress.style.width = "100%";
     }
 }
 
@@ -495,25 +563,7 @@ function restartGame() {
 
     clearInterval(timer);
 
-    startGame();
-}
-
-
-// ==========================================
-// VOLVER AL INICIO
-// ==========================================
-
-function goHome() {
-
-    clearInterval(timer);
-
-    stopMusic();
-
-    closeGameMenu();
-
-    isMultiplayer = false;
-
-    showScreen("homeScreen");
+    startGame(selectedAmount);
 }
 
 
@@ -540,6 +590,22 @@ function closeGameMenu() {
     if (menu) {
         menu.classList.add("hidden");
     }
+}
+
+
+// ==========================================
+// SALIR DEL JUEGO
+// ==========================================
+
+function exitGame() {
+
+    clearInterval(timer);
+
+    stopMusic();
+
+    closeGameMenu();
+
+    showScreen("homeScreen");
 }
 
 
@@ -581,13 +647,13 @@ function startMusic() {
 
     music.volume = 0.25;
 
-    const playPromise = music.play();
+    const promise = music.play();
 
-    if (playPromise !== undefined) {
+    if (promise) {
 
-        playPromise.catch(() => {
-            // El navegador puede bloquear
-            // el autoplay hasta que haya interacción.
+        promise.catch(() => {
+            // Algunos navegadores bloquean
+            // la reproducción automática.
         });
     }
 }
@@ -613,7 +679,7 @@ function toggleMusic() {
         musicEnabled
     );
 
-    updateSettingsUI();
+    updateSettings();
 
     if (musicEnabled) {
         startMusic();
@@ -629,11 +695,8 @@ function toggleMusic() {
 
 function vibrate(pattern) {
 
-    if (!vibrationEnabled) {
-        return;
-    }
-
     if (
+        vibrationEnabled &&
         "vibrate" in navigator
     ) {
         navigator.vibrate(pattern);
@@ -651,7 +714,7 @@ function toggleVibration() {
         vibrationEnabled
     );
 
-    updateSettingsUI();
+    updateSettings();
 
     if (vibrationEnabled) {
         vibrate([50]);
@@ -665,123 +728,174 @@ function toggleVibration() {
 
 function loadSettings() {
 
-    const savedMusic =
+    const music =
         localStorage.getItem("musicEnabled");
 
-    const savedVibration =
+    const vibration =
         localStorage.getItem("vibrationEnabled");
 
-    if (savedMusic !== null) {
+
+    if (music !== null) {
         musicEnabled =
-            savedMusic === "true";
+            music === "true";
     }
 
-    if (savedVibration !== null) {
+
+    if (vibration !== null) {
         vibrationEnabled =
-            savedVibration === "true";
+            vibration === "true";
     }
 
-    updateSettingsUI();
+
+    updateSettings();
 }
 
 
-function updateSettingsUI() {
+function updateSettings() {
 
-    const musicToggle =
-        document.getElementById("musicToggle");
+    const musicStatus =
+        document.getElementById("musicStatus");
 
-    const vibrationToggle =
-        document.getElementById("vibrationToggle");
+    const vibrationStatus =
+        document.getElementById("vibrationStatus");
 
-    if (musicToggle) {
-        musicToggle.checked =
-            musicEnabled;
+
+    if (musicStatus) {
+
+        musicStatus.textContent =
+            musicEnabled ? "ON" : "OFF";
     }
 
-    if (vibrationToggle) {
-        vibrationToggle.checked =
-            vibrationEnabled;
+
+    if (vibrationStatus) {
+
+        vibrationStatus.textContent =
+            vibrationEnabled ? "ON" : "OFF";
     }
 }
 
 
 // ==========================================
-// MULTIJUGADOR
+// MULTIJUGADOR - INTERFAZ
 // ==========================================
 
-function openMultiplayer() {
-
-    isMultiplayer = true;
+function openMultiplayerScreen() {
 
     showScreen("multiplayerScreen");
 }
 
 
-function createRoom() {
+function showJoinRoom() {
 
-    isMultiplayer = true;
-    isHost = true;
+    const box =
+        document.getElementById("joinRoomBox");
+
+    if (box) {
+
+        box.classList.remove("hidden");
+
+        const input =
+            document.getElementById("roomCode");
+
+        if (input) {
+            input.focus();
+        }
+    }
+}
+
+
+// ==========================================
+// CREAR SALA
+// ==========================================
+
+function createRoom() {
 
     roomCode =
         generateRoomCode();
 
-    const roomCodeElement =
-        document.getElementById("roomCode");
+    isHost = true;
 
-    if (roomCodeElement) {
-        roomCodeElement.textContent =
-            roomCode;
-    }
-
-    const displayCode =
+    const display =
         document.getElementById("displayRoomCode");
 
-    if (displayCode) {
-        displayCode.value =
+    if (display) {
+        display.textContent =
             roomCode;
     }
+
+
+    const host =
+        document.getElementById("hostName");
+
+    if (host) {
+        host.textContent =
+            playerName || "Jugador 1";
+    }
+
 
     showScreen("roomScreen");
 }
 
 
+// ==========================================
+// UNIRSE A SALA
+// ==========================================
+
 function joinRoom() {
 
     const input =
-        document.getElementById("joinRoomCode");
+        document.getElementById("roomCode");
 
-    if (!input) {
-        return;
-    }
+    if (!input) return;
 
     const code =
         input.value.trim().toUpperCase();
 
+
     if (code.length !== 6) {
 
         alert(
-            "Escribe un código de sala de 6 caracteres."
+            "El código debe tener 6 caracteres."
         );
 
         return;
     }
 
+
     roomCode = code;
 
-    isMultiplayer = true;
     isHost = false;
+
+
+    const display =
+        document.getElementById("displayRoomCode");
+
+    if (display) {
+        display.textContent =
+            roomCode;
+    }
+
+
+    const guest =
+        document.getElementById("guestName");
+
+    if (guest) {
+        guest.textContent =
+            playerName || "Jugador 2";
+    }
+
 
     showScreen("roomScreen");
 
-    const roomCodeElement =
-        document.getElementById("roomCode");
-
-    if (roomCodeElement) {
-        roomCodeElement.textContent =
-            roomCode;
-    }
+    alert(
+        "Sala encontrada. El multijugador real se conectará con Firebase en el siguiente paso."
+    );
 }
 
+
+// ==========================================
+// GENERAR CÓDIGO
+// ==========================================
 
 function generateRoomCode() {
 
@@ -805,25 +919,13 @@ function generateRoomCode() {
 }
 
 
-function leaveRoom() {
-
-    roomCode = "";
-    isHost = false;
-    isMultiplayer = false;
-
-    showScreen("homeScreen");
-}
-
-
 // ==========================================
-// COPIAR CÓDIGO DE SALA
+// COPIAR SALA
 // ==========================================
 
 function copyRoomCode() {
 
-    if (!roomCode) {
-        return;
-    }
+    if (!roomCode) return;
 
     navigator.clipboard
         .writeText(roomCode)
@@ -837,81 +939,52 @@ function copyRoomCode() {
         .catch(() => {
 
             alert(
-                `Código de sala: ${roomCode}`
+                "Código: " + roomCode
             );
-
         });
 }
 
 
 // ==========================================
-// BOTÓN ATRÁS
+// SALIR DE SALA
 // ==========================================
 
-function goBackToPlayer() {
-    showScreen("playerScreen");
+function leaveRoom() {
+
+    roomCode = "";
+
+    isHost = false;
+
+    showScreen("multiplayerScreen");
 }
 
 
-function goBackToCategory() {
-    showScreen("categoryScreen");
-}
-
-
 // ==========================================
-// TECLADO
+// TECLADO A B C D
 // ==========================================
 
 document.addEventListener(
     "keydown",
     function(event) {
 
-        // ESC
-        if (event.key === "Escape") {
-
-            const gameMenu =
-                document.getElementById("gameMenu");
-
-            const howToPlay =
-                document.getElementById("howToPlay");
-
-            if (
-                gameMenu &&
-                !gameMenu.classList.contains("hidden")
-            ) {
-                closeGameMenu();
-                return;
-            }
-
-            if (
-                howToPlay &&
-                !howToPlay.classList.contains("hidden")
-            ) {
-                closeHowToPlay();
-                return;
-            }
-        }
-
-        // Respuestas A B C D
         if (
-            currentScreen === "gameScreen"
+            document
+                .getElementById("gameScreen")
+                ?.classList.contains("active")
         ) {
 
             const keys = {
-                "a": 0,
-                "b": 1,
-                "c": 2,
-                "d": 3
+                a: 0,
+                b: 1,
+                c: 2,
+                d: 3
             };
 
             const key =
                 event.key.toLowerCase();
 
-            if (
-                Object.prototype.hasOwnProperty
-                .call(keys, key)
-            ) {
-                answerQuestion(keys[key]);
+            if (key in keys) {
+                selectAnswer(keys[key]);
             }
         }
     }
@@ -919,7 +992,7 @@ document.addEventListener(
 
 
 // ==========================================
-// INICIALIZAR
+// INICIAR
 // ==========================================
 
 document.addEventListener(
@@ -931,8 +1004,7 @@ document.addEventListener(
         showScreen("homeScreen");
 
         console.log(
-            "Desafío Mental iniciado correctamente."
+            "🧠 Desafío Mental cargado correctamente."
         );
-
     }
 );

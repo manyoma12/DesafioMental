@@ -1,559 +1,723 @@
 const questions = [
 
-    // =========================
-    // 🧠 CULTURA GENERAL
-    // =========================
+    // ==========================================
+    // 🧠 CULTURA GENERAL — FÁCIL
+    // ==========================================
 
     {
         category: "general",
         difficulty: "easy",
-        question: "¿Cuál es el planeta más grande del sistema solar?",
-        answers: ["Júpiter", "Marte", "Venus", "Mercurio"],
+        question: "¿Qué instrumento se utiliza para medir la temperatura?",
+        answers: ["Barómetro", "Termómetro", "Cronómetro", "Brújula"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos meses tiene un año?",
+        answers: ["10", "11", "12", "13"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal es conocido como el rey de la selva?",
+        answers: ["Tigre", "León", "Elefante", "Jirafa"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo utilizamos principalmente para ver?",
+        answers: ["Orejas", "Nariz", "Ojos", "Manos"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántas horas tiene un día?",
+        answers: ["12", "18", "24", "48"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué líquido es esencial para la hidratación humana?",
+        answers: ["Aceite", "Agua", "Vinagre", "Tinta"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué astro ilumina la Tierra durante el día?",
+        answers: ["La Luna", "Marte", "El Sol", "Venus"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántas patas tiene normalmente un perro?",
+        answers: ["2", "4", "6", "8"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué objeto utilizamos para saber la hora?",
+        answers: ["Reloj", "Espejo", "Regla", "Lupa"],
         correct: 0
     },
     {
         category: "general",
         difficulty: "easy",
-        question: "¿Cuántos días tiene una semana?",
-        answers: ["5", "6", "7", "8"],
+        question: "¿Qué sentido utilizamos para escuchar?",
+        answers: ["Vista", "Tacto", "Oído", "Gusto"],
+        correct: 2
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el resultado de 5 + 5?",
+        answers: ["8", "9", "10", "12"],
         correct: 2
     },
     {
         category: "general",
         difficulty: "easy",
-        question: "¿Cuál es el océano más grande del mundo?",
-        answers: ["Atlántico", "Índico", "Pacífico", "Ártico"],
+        question: "¿Cuál es el resultado de 10 - 4?",
+        answers: ["4", "5", "6", "7"],
         correct: 2
     },
     {
         category: "general",
-        difficulty: "medium",
-        question: "¿Cuál es el idioma más hablado del mundo por número de hablantes nativos?",
-        answers: ["Inglés", "Español", "Chino mandarín", "Francés"],
+        difficulty: "easy",
+        question: "¿Cuál es el resultado de 3 × 4?",
+        answers: ["7", "10", "12", "14"],
         correct: 2
     },
     {
         category: "general",
-        difficulty: "medium",
-        question: "¿Quién pintó la Mona Lisa?",
-        answers: ["Van Gogh", "Leonardo da Vinci", "Picasso", "Miguel Ángel"],
-        correct: 1
-    },
-    {
-        category: "general",
-        difficulty: "medium",
-        question: "¿Cuál es el metal cuyo símbolo químico es Au?",
-        answers: ["Plata", "Hierro", "Oro", "Cobre"],
+        difficulty: "easy",
+        question: "¿Cuál es el resultado de 20 ÷ 5?",
+        answers: ["2", "3", "4", "5"],
         correct: 2
     },
     {
         category: "general",
-        difficulty: "hard",
-        question: "¿Cuál es la capital de Kazajistán?",
-        answers: ["Taskent", "Astaná", "Biskek", "Dusambé"],
+        difficulty: "easy",
+        question: "¿Qué número viene después del 99?",
+        answers: ["98", "100", "101", "109"],
         correct: 1
     },
     {
         category: "general",
-        difficulty: "hard",
-        question: "¿Qué filósofo escribió 'La República'?",
-        answers: ["Aristóteles", "Sócrates", "Platón", "Descartes"],
+        difficulty: "easy",
+        question: "¿Cuál es la mitad de 20?",
+        answers: ["5", "10", "15", "20"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuánto es 7 + 8?",
+        answers: ["13", "14", "15", "16"],
         correct: 2
     },
     {
         category: "general",
-        difficulty: "god",
-        question: "¿Qué elemento químico tiene el número atómico 74?",
-        answers: ["Tungsteno", "Renio", "Osmio", "Tantalio"],
-        correct: 0
-    },
-
-    // =========================
-    // 🇨🇴 COLOMBIA
-    // =========================
-
-    {
-        category: "colombia",
         difficulty: "easy",
-        question: "¿Cuál es la capital de Colombia?",
-        answers: ["Cali", "Bogotá", "Medellín", "Cartagena"],
+        question: "¿Cuánto es 9 × 2?",
+        answers: ["16", "18", "20", "21"],
         correct: 1
     },
     {
-        category: "colombia",
+        category: "general",
         difficulty: "easy",
-        question: "¿Cuál es el río más importante de Colombia?",
-        answers: ["Amazonas", "Magdalena", "Cauca", "Orinoco"],
-        correct: 1
-    },
-    {
-        category: "colombia",
-        difficulty: "easy",
-        question: "¿En qué ciudad se encuentra la Torre del Reloj?",
-        answers: ["Cartagena", "Cali", "Pereira", "Manizales"],
-        correct: 0
-    },
-    {
-        category: "colombia",
-        difficulty: "medium",
-        question: "¿En qué año se declaró la independencia de Colombia?",
-        answers: ["1810", "1819", "1821", "1830"],
-        correct: 0
-    },
-    {
-        category: "colombia",
-        difficulty: "medium",
-        question: "¿Quién fue conocido como 'El Libertador'?",
-        answers: ["Francisco de Paula Santander", "Simón Bolívar", "Antonio Nariño", "José María Córdova"],
-        correct: 1
-    },
-    {
-        category: "colombia",
-        difficulty: "medium",
-        question: "¿Cuál es el departamento cuya capital es Cali?",
-        answers: ["Cauca", "Valle del Cauca", "Nariño", "Risaralda"],
-        correct: 1
-    },
-    {
-        category: "colombia",
-        difficulty: "hard",
-        question: "¿En qué batalla fue derrotado el ejército español que permitió consolidar la independencia de Nueva Granada?",
-        answers: ["Batalla de Boyacá", "Batalla de Carabobo", "Batalla de Pichincha", "Batalla de Ayacucho"],
-        correct: 0
-    },
-    {
-        category: "colombia",
-        difficulty: "hard",
-        question: "¿Quién escribió 'El olvido que seremos'?",
-        answers: ["Gabriel García Márquez", "Héctor Abad Faciolince", "Álvaro Mutis", "Jorge Isaacs"],
-        correct: 1
-    },
-    {
-        category: "colombia",
-        difficulty: "god",
-        question: "¿Cuál fue el nombre original de Bogotá durante el periodo colonial?",
-        answers: ["Santa Fe de Bogotá", "Nueva Granada", "Santa Marta", "Villa de Leyva"],
-        correct: 0
-    },
-
-    // =========================
-    // 🔬 CIENCIA
-    // =========================
-
-    {
-        category: "science",
-        difficulty: "easy",
-        question: "¿Cuál es el planeta conocido como el planeta rojo?",
-        answers: ["Venus", "Marte", "Saturno", "Neptuno"],
-        correct: 1
-    },
-    {
-        category: "science",
-        difficulty: "easy",
-        question: "¿Qué órgano bombea la sangre por el cuerpo?",
-        answers: ["Pulmón", "Cerebro", "Corazón", "Hígado"],
+        question: "¿Cuánto es 30 - 12?",
+        answers: ["16", "17", "18", "20"],
         correct: 2
     },
     {
-        category: "science",
+        category: "general",
         difficulty: "easy",
-        question: "¿Qué gas necesitan los seres humanos para respirar?",
-        answers: ["Oxígeno", "Helio", "Hidrógeno", "Nitrógeno"],
-        correct: 0
-    },
-    {
-        category: "science",
-        difficulty: "medium",
-        question: "¿Cuál es la unidad básica de la vida?",
-        answers: ["Átomo", "Célula", "Molécula", "Tejido"],
-        correct: 1
-    },
-    {
-        category: "science",
-        difficulty: "medium",
-        question: "¿Qué fuerza mantiene a los planetas en órbita alrededor del Sol?",
-        answers: ["Magnetismo", "Fricción", "Gravedad", "Electricidad"],
-        correct: 2
-    },
-    {
-        category: "science",
-        difficulty: "medium",
-        question: "¿Cuál es la fórmula química del agua?",
-        answers: ["CO2", "H2O", "O2", "NaCl"],
-        correct: 1
-    },
-    {
-        category: "science",
-        difficulty: "hard",
-        question: "¿Cuál es la velocidad aproximada de la luz en el vacío?",
-        answers: ["300.000 km/s", "150.000 km/s", "30.000 km/s", "3.000 km/s"],
-        correct: 0
-    },
-    {
-        category: "science",
-        difficulty: "hard",
-        question: "¿Qué partícula subatómica posee carga negativa?",
-        answers: ["Protón", "Neutrón", "Electrón", "Fotón"],
-        correct: 2
-    },
-    {
-        category: "science",
-        difficulty: "god",
-        question: "¿Qué principio establece que no se pueden conocer simultáneamente con precisión arbitraria la posición y el momento de una partícula?",
-        answers: ["Principio de exclusión", "Principio de incertidumbre", "Principio de relatividad", "Principio de superposición"],
+        question: "¿Cuánto es 6 × 5?",
+        answers: ["25", "30", "35", "40"],
         correct: 1
     },
 
-    // =========================
-    // 📜 HISTORIA
-    // =========================
-
     {
-        category: "history",
+        category: "general",
         difficulty: "easy",
-        question: "¿En qué año llegó Cristóbal Colón a América?",
-        answers: ["1492", "1500", "1453", "1519"],
-        correct: 0
+        question: "¿Cuántos lados tiene un cuadrado?",
+        answers: ["3", "4", "5", "6"],
+        correct: 1
     },
     {
-        category: "history",
+        category: "general",
         difficulty: "easy",
-        question: "¿Quién fue el primer emperador romano?",
-        answers: ["Julio César", "Nerón", "Augusto", "Trajano"],
-        correct: 2
+        question: "¿Cuántos lados tiene un triángulo?",
+        answers: ["2", "3", "4", "5"],
+        correct: 1
     },
     {
-        category: "history",
+        category: "general",
         difficulty: "easy",
-        question: "¿Dónde se construyeron las pirámides de Guiza?",
-        answers: ["México", "Egipto", "Grecia", "Italia"],
-        correct: 1
-    },
-    {
-        category: "history",
-        difficulty: "medium",
-        question: "¿En qué año comenzó la Segunda Guerra Mundial?",
-        answers: ["1935", "1939", "1941", "1945"],
-        correct: 1
-    },
-    {
-        category: "history",
-        difficulty: "medium",
-        question: "¿Qué muro cayó en 1989?",
-        answers: ["Muro de Roma", "Muro de Berlín", "Muro de París", "Muro de Londres"],
-        correct: 1
-    },
-    {
-        category: "history",
-        difficulty: "medium",
-        question: "¿Quién fue conocido como el Rey Sol?",
-        answers: ["Luis XIV", "Carlos V", "Napoleón", "Luis XVI"],
-        correct: 0
-    },
-    {
-        category: "history",
-        difficulty: "hard",
-        question: "¿Qué tratado puso fin oficialmente a la Primera Guerra Mundial con Alemania?",
-        answers: ["Tratado de París", "Tratado de Versalles", "Tratado de Roma", "Tratado de Viena"],
-        correct: 1
-    },
-    {
-        category: "history",
-        difficulty: "hard",
-        question: "¿Qué civilización desarrolló la escritura cuneiforme?",
-        answers: ["Egipcia", "Romana", "Sumeria", "Maya"],
-        correct: 2
-    },
-    {
-        category: "history",
-        difficulty: "god",
-        question: "¿Qué emperador bizantino ordenó recopilar el Corpus Juris Civilis?",
-        answers: ["Constantino", "Justiniano I", "Teodosio", "Basilio II"],
-        correct: 1
-    },
-
-    // =========================
-    // ⚽ DEPORTES
-    // =========================
-
-    {
-        category: "sports",
-        difficulty: "easy",
-        question: "¿Cuántos jugadores tiene un equipo de fútbol en el campo?",
-        answers: ["9", "10", "11", "12"],
-        correct: 2
-    },
-    {
-        category: "sports",
-        difficulty: "easy",
-        question: "¿Cuántos puntos vale un triple en baloncesto?",
-        answers: ["1", "2", "3", "4"],
-        correct: 2
-    },
-    {
-        category: "sports",
-        difficulty: "medium",
-        question: "¿Cuánto dura normalmente un partido de fútbol?",
-        answers: ["60 minutos", "80 minutos", "90 minutos", "120 minutos"],
-        correct: 2
-    },
-    {
-        category: "sports",
-        difficulty: "medium",
-        question: "¿En qué deporte se utiliza un 'birdie'?",
-        answers: ["Tenis", "Golf", "Boxeo", "Natación"],
-        correct: 1
-    },
-    {
-        category: "sports",
-        difficulty: "medium",
-        question: "¿Cuántos anillos tiene el símbolo olímpico?",
+        question: "¿Cuántos lados tiene un pentágono?",
         answers: ["4", "5", "6", "7"],
         correct: 1
     },
     {
-        category: "sports",
-        difficulty: "hard",
-        question: "¿Qué país ganó el Mundial de fútbol de 2014?",
-        answers: ["Argentina", "Alemania", "Brasil", "España"],
-        correct: 1
-    },
-    {
-        category: "sports",
-        difficulty: "hard",
-        question: "¿En qué deporte destacó Michael Phelps?",
-        answers: ["Atletismo", "Natación", "Ciclismo", "Remo"],
-        correct: 1
-    },
-    {
-        category: "sports",
-        difficulty: "god",
-        question: "¿Qué atleta posee el récord mundial masculino de los 100 metros lisos?",
-        answers: ["Tyson Gay", "Yohan Blake", "Usain Bolt", "Asafa Powell"],
-        correct: 2
-    },
-
-    // =========================
-    // 💻 TECNOLOGÍA
-    // =========================
-
-    {
-        category: "technology",
+        category: "general",
         difficulty: "easy",
-        question: "¿Qué significa HTML?",
-        answers: [
-            "HyperText Markup Language",
-            "High Technology Machine Language",
-            "Hyperlink Text Machine Language",
-            "Home Tool Markup Language"
-        ],
-        correct: 0
+        question: "¿Cuántos lados tiene un hexágono?",
+        answers: ["5", "6", "7", "8"],
+        correct: 1
     },
     {
-        category: "technology",
+        category: "general",
         difficulty: "easy",
-        question: "¿Qué dispositivo utilizamos normalmente para mover el cursor?",
-        answers: ["Router", "Ratón", "Monitor", "Impresora"],
-        correct: 1
-    },
-    {
-        category: "technology",
-        difficulty: "medium",
-        question: "¿Qué lenguaje se utiliza principalmente para dar interactividad a una página web?",
-        answers: ["JavaScript", "HTML", "SQL", "XML"],
-        correct: 0
-    },
-    {
-        category: "technology",
-        difficulty: "medium",
-        question: "¿Qué significa CPU?",
-        answers: [
-            "Central Processing Unit",
-            "Computer Personal Unit",
-            "Central Program Utility",
-            "Computer Processing User"
-        ],
-        correct: 0
-    },
-    {
-        category: "technology",
-        difficulty: "medium",
-        question: "¿Qué empresa desarrolla Android?",
-        answers: ["Apple", "Google", "Microsoft", "Sony"],
-        correct: 1
-    },
-    {
-        category: "technology",
-        difficulty: "hard",
-        question: "¿Qué protocolo se utiliza para transferir páginas web de forma segura?",
-        answers: ["HTTP", "FTP", "HTTPS", "SMTP"],
+        question: "¿Qué figura geométrica es completamente redonda?",
+        answers: ["Cuadrado", "Triángulo", "Círculo", "Pentágono"],
         correct: 2
     },
     {
-        category: "technology",
-        difficulty: "hard",
-        question: "¿Qué estructura de datos funciona bajo el principio LIFO?",
-        answers: ["Cola", "Pila", "Árbol", "Grafo"],
-        correct: 1
-    },
-    {
-        category: "technology",
-        difficulty: "god",
-        question: "¿Qué algoritmo de cifrado es un estándar ampliamente utilizado para cifrado simétrico?",
-        answers: ["AES", "RSA", "SHA-256", "DSA"],
-        correct: 0
-    },
-
-    // =========================
-    // 🌎 GEOGRAFÍA
-    // =========================
-
-    {
-        category: "geography",
+        category: "general",
         difficulty: "easy",
-        question: "¿Cuál es el continente más grande?",
-        answers: ["África", "Europa", "Asia", "América"],
-        correct: 2
-    },
-    {
-        category: "geography",
-        difficulty: "easy",
-        question: "¿Cuál es el país más grande del mundo por superficie?",
-        answers: ["China", "Estados Unidos", "Canadá", "Rusia"],
-        correct: 3
-    },
-    {
-        category: "geography",
-        difficulty: "medium",
-        question: "¿Cuál es la capital de Australia?",
-        answers: ["Sídney", "Melbourne", "Canberra", "Perth"],
-        correct: 2
-    },
-    {
-        category: "geography",
-        difficulty: "medium",
-        question: "¿Qué río atraviesa Egipto?",
-        answers: ["Amazonas", "Nilo", "Danubio", "Yangtsé"],
-        correct: 1
-    },
-    {
-        category: "geography",
-        difficulty: "medium",
-        question: "¿Cuál es el desierto cálido más grande del mundo?",
-        answers: ["Gobi", "Sahara", "Atacama", "Kalahari"],
-        correct: 1
-    },
-    {
-        category: "geography",
-        difficulty: "hard",
-        question: "¿Cuál es el país más pequeño del mundo?",
-        answers: ["Mónaco", "Vaticano", "San Marino", "Liechtenstein"],
-        correct: 1
-    },
-    {
-        category: "geography",
-        difficulty: "hard",
-        question: "¿Qué país tiene más husos horarios oficiales?",
-        answers: ["Rusia", "Estados Unidos", "Francia", "China"],
-        correct: 2
-    },
-    {
-        category: "geography",
-        difficulty: "god",
-        question: "¿Cuál es el lago más profundo del mundo?",
-        answers: ["Lago Superior", "Lago Victoria", "Lago Baikal", "Lago Titicaca"],
-        correct: 2
-    },
-
-    // =========================
-    // 🎬 ENTRETENIMIENTO
-    // =========================
-
-    {
-        category: "entertainment",
-        difficulty: "easy",
-        question: "¿Cómo se llama el personaje principal de la saga Harry Potter?",
-        answers: ["Ron Weasley", "Harry Potter", "Draco Malfoy", "Neville Longbottom"],
-        correct: 1
-    },
-    {
-        category: "entertainment",
-        difficulty: "easy",
-        question: "¿Qué personaje vive en una piña debajo del mar?",
-        answers: ["Bob Esponja", "Patricio", "Calamardo", "Arenita"],
+        question: "¿Qué objeto sirve para medir longitudes?",
+        answers: ["Regla", "Reloj", "Vaso", "Brújula"],
         correct: 0
     },
     {
-        category: "entertainment",
-        difficulty: "medium",
-        question: "¿Cómo se llama el reino de Frozen?",
-        answers: ["Arendelle", "Narnia", "Wakanda", "Genovia"],
-        correct: 0
-    },
-    {
-        category: "entertainment",
-        difficulty: "medium",
-        question: "¿Quién dirigió la película Titanic de 1997?",
-        answers: ["Steven Spielberg", "James Cameron", "Christopher Nolan", "George Lucas"],
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué instrumento sirve para orientarse?",
+        answers: ["Termómetro", "Brújula", "Balanza", "Microscopio"],
         correct: 1
     },
     {
-        category: "entertainment",
-        difficulty: "medium",
-        question: "¿Qué instrumento toca principalmente el personaje de Jack en Titanic?",
-        answers: ["Violín", "Piano", "Ninguno", "Guitarra"],
-        correct: 2
-    },
-    {
-        category: "entertainment",
-        difficulty: "hard",
-        question: "¿Cuál fue la primera película de Toy Story?",
-        answers: ["Toy Story", "Toy Story 2", "Toy Story 3", "Toy Story 4"],
-        correct: 0
-    },
-    {
-        category: "entertainment",
-        difficulty: "hard",
-        question: "¿Qué actor interpretó a Iron Man en el Universo Cinematográfico de Marvel?",
-        answers: ["Chris Evans", "Robert Downey Jr.", "Chris Hemsworth", "Mark Ruffalo"],
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué instrumento permite observar objetos muy pequeños?",
+        answers: ["Telescopio", "Microscopio", "Brújula", "Barómetro"],
         correct: 1
     },
     {
-        category: "entertainment",
-        difficulty: "god",
-        question: "¿Qué película ganó el Óscar a mejor película en 2020?",
-        answers: ["1917", "Joker", "Parásitos", "Ford v Ferrari"],
-        correct: 2
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué instrumento permite observar objetos muy lejanos?",
+        answers: ["Microscopio", "Telescopio", "Termómetro", "Regla"],
+        correct: 1
     },
-
-    // =========================
-    // 🎲 DESAFÍO MIXTO
-    // =========================
-    // No necesita preguntas propias.
-    // El código mezcla todas las categorías.
-
-    // =========================
-    // ➕ PREGUNTAS EXTRA
-    // =========================
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué aparato se utiliza para pesar objetos?",
+        answers: ["Balanza", "Brújula", "Reloj", "Telescopio"],
+        correct: 0
+    },
 
     {
         category: "general",
-        difficulty: "god",
-        question: "¿Cuál es el número primo más pequeño mayor que 100?",
-        answers: ["101", "103", "107", "109"],
+        difficulty: "easy",
+        question: "¿Qué color resulta de mezclar azul y amarillo?",
+        answers: ["Rojo", "Verde", "Morado", "Naranja"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué color resulta de mezclar rojo y amarillo?",
+        answers: ["Verde", "Naranja", "Azul", "Violeta"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué color resulta de mezclar rojo y azul?",
+        answers: ["Verde", "Naranja", "Morado", "Amarillo"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué color se asocia normalmente con la nieve?",
+        answers: ["Negro", "Blanco", "Verde", "Naranja"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué color suele asociarse con la hierba?",
+        answers: ["Verde", "Morado", "Rosa", "Negro"],
         correct: 0
     },
 
     {
-        category: "colombia",
-        difficulty: "god",
-        question: "¿Cuál es el pico más alto de Colombia?",
-        answers: [
-            "Nevado del Ruiz",
-            "Pico Cristóbal Colón",
-            "Nevado del Tolima",
-            "Sierra Nevada del Cocuy"
-        ],
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal produce lana?",
+        answers: ["Oveja", "Gallina", "Perro", "Caballo"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal produce miel?",
+        answers: ["Mariposa", "Abeja", "Hormiga", "Mosca"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal tiene una trompa larga?",
+        answers: ["Elefante", "Caballo", "León", "Oso"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal tiene un cuello muy largo?",
+        answers: ["Jirafa", "Cebra", "Tigre", "Oveja"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal es famoso por cambiar de color para camuflarse?",
+        answers: ["Camaleón", "Vaca", "Caballo", "Elefante"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué alimento se obtiene principalmente de las vacas?",
+        answers: ["Leche", "Arroz", "Trigo", "Café"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿De qué fruta se obtiene el jugo de naranja?",
+        answers: ["Manzana", "Naranja", "Pera", "Uva"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué alimento se produce principalmente a partir del trigo?",
+        answers: ["Pan", "Queso", "Mantequilla", "Yogur"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué fruta suele ser amarilla y alargada?",
+        answers: ["Fresa", "Banano", "Sandía", "Cereza"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué fruta tiene normalmente una cáscara verde y pulpa roja?",
+        answers: ["Sandía", "Banano", "Pera", "Limón"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué estación del año suele ser la más calurosa?",
+        answers: ["Invierno", "Verano", "Otoño", "Primavera"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué estación suele tener las temperaturas más bajas?",
+        answers: ["Verano", "Primavera", "Invierno", "Otoño"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué estación viene después del verano?",
+        answers: ["Primavera", "Invierno", "Otoño", "Verano"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué estación viene después del invierno?",
+        answers: ["Otoño", "Verano", "Primavera", "Invierno"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos días tiene normalmente febrero?",
+        answers: ["27", "28", "30", "31"],
+        correct: 1
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué día viene después del lunes?",
+        answers: ["Domingo", "Martes", "Miércoles", "Viernes"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué día viene antes del viernes?",
+        answers: ["Miércoles", "Jueves", "Sábado", "Martes"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué día viene después del sábado?",
+        answers: ["Viernes", "Domingo", "Lunes", "Martes"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos días tiene un fin de semana?",
+        answers: ["1", "2", "3", "4"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos minutos tiene una hora?",
+        answers: ["30", "45", "60", "100"],
+        correct: 2
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos segundos tiene un minuto?",
+        answers: ["30", "45", "60", "90"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos minutos hay en media hora?",
+        answers: ["15", "20", "30", "40"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántas horas hay en medio día?",
+        answers: ["6", "10", "12", "24"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos meses forman medio año?",
+        answers: ["3", "4", "6", "8"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántas semanas tiene aproximadamente un mes?",
+        answers: ["1", "2", "4", "8"],
+        correct: 2
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué usamos normalmente para protegernos de la lluvia?",
+        answers: ["Paraguas", "Gafas", "Guantes", "Toalla"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué objeto utilizamos para escribir con tinta?",
+        answers: ["Lápiz", "Bolígrafo", "Borrador", "Regla"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué objeto sirve para borrar lo escrito con lápiz?",
+        answers: ["Regla", "Borrador", "Tijeras", "Pegamento"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué objeto utilizamos para cortar papel?",
+        answers: ["Tijeras", "Cuchara", "Regla", "Vaso"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué objeto utilizamos normalmente para beber agua?",
+        answers: ["Vaso", "Plato", "Cuchillo", "Cuaderno"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo utilizamos para caminar?",
+        answers: ["Pies", "Manos", "Orejas", "Boca"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo permite doblar el brazo?",
+        answers: ["Rodilla", "Codo", "Tobillo", "Cuello"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo utilizamos principalmente para masticar?",
+        answers: ["Dientes", "Orejas", "Dedos", "Cejas"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo está entre la cabeza y el torso?",
+        answers: ["Rodilla", "Cuello", "Tobillo", "Mano"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué parte del cuerpo utilizamos para agarrar objetos?",
+        answers: ["Manos", "Pies", "Orejas", "Cabello"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué medio de transporte circula sobre rieles?",
+        answers: ["Tren", "Avión", "Barco", "Bicicleta"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué medio de transporte viaja por el aire?",
+        answers: ["Tren", "Avión", "Submarino", "Autobús"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué medio de transporte navega por el agua?",
+        answers: ["Barco", "Tren", "Avión", "Motocicleta"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué vehículo tiene normalmente dos ruedas y pedales?",
+        answers: ["Bicicleta", "Autobús", "Tren", "Avión"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué vehículo se utiliza para transportar muchas personas por una ciudad?",
+        answers: ["Autobús", "Bicicleta", "Patineta", "Motocicleta"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Dónde se pueden pedir libros prestados?",
+        answers: ["Biblioteca", "Panadería", "Estadio", "Restaurante"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Dónde se exhiben normalmente obras de arte?",
+        answers: ["Museo", "Garaje", "Supermercado", "Estación"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Dónde se practican muchos deportes profesionales?",
+        answers: ["Estadio", "Biblioteca", "Farmacia", "Panadería"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Dónde se compran normalmente panes y productos horneados?",
+        answers: ["Panadería", "Biblioteca", "Museo", "Hospital"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Dónde se pueden ver animales de muchas especies en exhibición?",
+        answers: ["Zoológico", "Biblioteca", "Estadio", "Oficina"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal es conocido por sus rayas blancas y negras?",
+        answers: ["Cebra", "Leopardo", "Oso", "Jirafa"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal es famoso por su lentitud?",
+        answers: ["Guepardo", "Perezoso", "Caballo", "Águila"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal es famoso por correr muy rápido?",
+        answers: ["Guepardo", "Tortuga", "Perezoso", "Caracol"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué ave no puede volar y vive principalmente en regiones frías?",
+        answers: ["Águila", "Pingüino", "Golondrina", "Canario"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué animal tiene una bolsa donde transporta a sus crías?",
+        answers: ["Canguro", "León", "Elefante", "Tigre"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué sonido hace normalmente un perro?",
+        answers: ["Miau", "Guau", "Muu", "Oink"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué sonido hace normalmente un gato?",
+        answers: ["Miau", "Guau", "Muu", "Bee"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué sonido hace normalmente una vaca?",
+        answers: ["Muu", "Miau", "Guau", "Cua"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué sonido hace normalmente una oveja?",
+        answers: ["Bee", "Muu", "Oink", "Miau"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué sonido hace normalmente un cerdo?",
+        answers: ["Oink", "Miau", "Guau", "Bee"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué bebida se prepara normalmente con granos de café?",
+        answers: ["Café", "Limonada", "Agua", "Chocolate"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué bebida se prepara normalmente con hojas de té?",
+        answers: ["Té", "Café", "Leche", "Refresco"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué alimento se obtiene de las gallinas?",
+        answers: ["Huevos", "Pan", "Arroz", "Queso"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué alimento suele llevar queso y salsa de tomate sobre una masa?",
+        answers: ["Pizza", "Sushi", "Helado", "Ensalada"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué alimento se prepara normalmente con leche y puede tener diferentes sabores?",
+        answers: ["Yogur", "Pan", "Arroz", "Pasta"],
+        correct: 0
+    },
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el planeta más cercano al Sol?",
+        answers: ["Venus", "Mercurio", "Marte", "Júpiter"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué planeta es famoso por sus anillos?",
+        answers: ["Saturno", "Mercurio", "Venus", "Marte"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el satélite natural de la Tierra?",
+        answers: ["El Sol", "La Luna", "Marte", "Venus"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Qué estrella es la más cercana a la Tierra?",
+        answers: ["Sirio", "El Sol", "Vega", "Polaris"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cómo se llama nuestra galaxia?",
+        answers: ["Andrómeda", "Vía Láctea", "Orión", "Pegaso"],
         correct: 1
     }
 

@@ -236,34 +236,136 @@
 
       <div class="amount-grid">
 
-        <button onclick="startGame(10)">
+        <button onclick="selectAmount(10)">
           <strong>10</strong>
           <span>Rápida</span>
         </button>
 
-        <button onclick="startGame(20)">
+        <button onclick="selectAmount(20)">
           <strong>20</strong>
           <span>Corta</span>
         </button>
 
-        <button onclick="startGame(30)">
+        <button onclick="selectAmount(30)">
           <strong>30</strong>
           <span>Media</span>
         </button>
 
-        <button onclick="startGame(40)">
+        <button onclick="selectAmount(40)">
           <strong>40</strong>
           <span>Larga</span>
         </button>
 
-        <button onclick="startGame(50)">
+        <button onclick="selectAmount(50)">
           <strong>50</strong>
           <span>Experta</span>
         </button>
 
-        <button class="ultimate" onclick="startGame(70)">
+        <button class="ultimate" onclick="selectAmount(70)">
           <strong>70</strong>
           <span>🔥 Completa</span>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DIFICULTAD
+    ========================== -->
+
+    <section id="difficultyScreen" class="screen">
+
+      <button class="top-back" onclick="openAmountScreen()">
+        ← Volver
+      </button>
+
+      <div class="section-icon">
+        🎯
+      </div>
+
+      <h2>Elige la dificultad</h2>
+
+      <p class="description">
+        ¿Qué tan difícil quieres el desafío?
+      </p>
+
+      <div class="difficulty-grid">
+
+        <button
+          class="difficulty-card easy"
+          onclick="selectDifficulty('easy')"
+        >
+          <span>🟢</span>
+
+          <strong>Fácil</strong>
+
+          <small>
+            ⏱️ 50 segundos
+          </small>
+
+          <em>
+            Preguntas fáciles
+          </em>
+
+        </button>
+
+
+        <button
+          class="difficulty-card medium"
+          onclick="selectDifficulty('medium')"
+        >
+          <span>🟡</span>
+
+          <strong>Medio</strong>
+
+          <small>
+            ⏱️ 35 segundos
+          </small>
+
+          <em>
+            Preguntas medias
+          </em>
+
+        </button>
+
+
+        <button
+          class="difficulty-card hard"
+          onclick="selectDifficulty('hard')"
+        >
+          <span>🔴</span>
+
+          <strong>Difícil</strong>
+
+          <small>
+            ⏱️ 20 segundos
+          </small>
+
+          <em>
+            Preguntas difíciles
+          </em>
+
+        </button>
+
+
+        <button
+          class="difficulty-card god"
+          onclick="selectDifficulty('god')"
+        >
+          <span>☠️</span>
+
+          <strong>Dios</strong>
+
+          <small>
+            ⏱️ 15 segundos
+          </small>
+
+          <em>
+            Preguntas súper difíciles
+          </em>
+
         </button>
 
       </div>
@@ -505,9 +607,11 @@
             onclick="selectAnswer(0)"
           >
             <span>A</span>
+
             <strong id="answer0">
               Respuesta
             </strong>
+
           </button>
 
           <button
@@ -515,9 +619,11 @@
             onclick="selectAnswer(1)"
           >
             <span>B</span>
+
             <strong id="answer1">
               Respuesta
             </strong>
+
           </button>
 
           <button
@@ -525,9 +631,11 @@
             onclick="selectAnswer(2)"
           >
             <span>C</span>
+
             <strong id="answer2">
               Respuesta
             </strong>
+
           </button>
 
           <button
@@ -535,9 +643,11 @@
             onclick="selectAnswer(3)"
           >
             <span>D</span>
+
             <strong id="answer3">
               Respuesta
             </strong>
+
           </button>
 
         </div>
@@ -578,9 +688,7 @@
       </div>
 
 
-      <!-- =========================
-           🏆 RÉCORD PERSONAL
-      ========================== -->
+      <!-- 🏆 RÉCORD PERSONAL -->
 
       <div class="best-score">
 
@@ -593,9 +701,7 @@
       </div>
 
 
-      <!-- =========================
-           🔥 MEJOR RACHA
-      ========================== -->
+      <!-- 🔥 MEJOR RACHA -->
 
       <div class="best-streak">
 

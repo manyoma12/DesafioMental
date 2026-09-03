@@ -31,8 +31,14 @@ let bestStreak =
 let musicEnabled = true;
 let vibrationEnabled = true;
 
+// ==========================================
+// MULTIJUGADOR
+// ==========================================
+
 let roomCode = "";
 let isHost = false;
+let roomListener = null;
+let roomRef = null;
 
 
 // ==========================================
@@ -150,6 +156,10 @@ function goHome() {
     clearInterval(timer);
 
     stopMusic();
+
+    if (roomCode) {
+        cleanupRoomConnection(false);
+    }
 
     showScreen("homeScreen");
 
@@ -300,7 +310,6 @@ function startGame(amount) {
 
 function prepareQuestions(previousFirstQuestion = null) {
 
-    // Comprobar que exista el banco
     if (
         !window.questionBank ||
         !Array.isArray(window.questionBank)
@@ -316,8 +325,6 @@ function prepareQuestions(previousFirstQuestion = null) {
 
     }
 
-
-    // Copiar banco completo
     let available =
         [...window.questionBank];
 
@@ -390,35 +397,17 @@ function prepareQuestions(previousFirstQuestion = null) {
 
 
     // ======================================
-    // MEZCLAR PREGUNTAS
+    // MEZCLAR
     // ======================================
 
     shuffleArray(available);
 
-
-    // ======================================
-    // CREAR LA PARTIDA
-    // ======================================
-
     gameQuestions = [];
 
 
-    /*
-        Si hay menos preguntas disponibles
-        que las seleccionadas, reutilizamos
-        preguntas para completar la partida.
-
-        Ejemplo:
-
-        Hay 2 preguntas disponibles.
-        El jugador selecciona 10.
-
-        Resultado:
-        10 preguntas en la partida.
-
-        Las preguntas pueden repetirse,
-        pero el orden será aleatorio.
-    */
+    // ======================================
+    // CREAR PARTIDA
+    // ======================================
 
     for (
         let i = 0;
@@ -430,7 +419,6 @@ function prepareQuestions(previousFirstQuestion = null) {
             available[
                 i % available.length
             ];
-
 
         const newQuestion = {
 
@@ -451,7 +439,6 @@ function prepareQuestions(previousFirstQuestion = null) {
 
         };
 
-
         gameQuestions.push(
             newQuestion
         );
@@ -467,7 +454,7 @@ function prepareQuestions(previousFirstQuestion = null) {
 
 
     // ======================================
-    // ASEGURAR PRIMERA PREGUNTA DIFERENTE
+    // ASEGURAR PRIMERA DIFERENTE
     // ======================================
 
     if (
@@ -497,44 +484,11 @@ function prepareQuestions(previousFirstQuestion = null) {
     }
 
 
-    // ======================================
-    // SEGURIDAD
-    // ======================================
-
-    if (
-        gameQuestions.length !==
-        selectedAmount
-    ) {
-
-        console.error(
-            "❌ Error preparando preguntas."
-        );
-
-        console.error(
-            "Solicitadas:",
-            selectedAmount
-        );
-
-        console.error(
-            "Preparadas:",
-            gameQuestions.length
-        );
-
-    }
-    else {
-
-        console.log(
-            "✅ Partida preparada:",
-            gameQuestions.length,
-            "preguntas"
-        );
-
-        console.log(
-            "🆕 Primera pregunta:",
-            gameQuestions[0]?.question
-        );
-
-    }
+    console.log(
+        "✅ Partida preparada:",
+        gameQuestions.length,
+        "preguntas"
+    );
 
 }
 
@@ -555,7 +509,6 @@ function shuffleArray(array) {
             Math.floor(
                 Math.random() * (i + 1)
             );
-
 
         [
             array[i],
@@ -582,10 +535,6 @@ function showQuestion() {
     clearInterval(timer);
 
 
-    // ======================================
-    // COMPROBAR FINAL
-    // ======================================
-
     if (
         currentQuestion >=
         gameQuestions.length
@@ -602,9 +551,7 @@ function showQuestion() {
         gameQuestions[currentQuestion];
 
 
-    // ======================================
     // CONTADOR
-    // ======================================
 
     const counter =
         document.getElementById(
@@ -619,9 +566,7 @@ function showQuestion() {
     }
 
 
-    // ======================================
     // PROGRESO
-    // ======================================
 
     const progress =
         document.getElementById(
@@ -640,9 +585,7 @@ function showQuestion() {
     }
 
 
-    // ======================================
     // CATEGORÍA
-    // ======================================
 
     const category =
         document.getElementById(
@@ -659,9 +602,7 @@ function showQuestion() {
     }
 
 
-    // ======================================
     // PREGUNTA
-    // ======================================
 
     const questionText =
         document.getElementById(
@@ -676,9 +617,7 @@ function showQuestion() {
     }
 
 
-    // ======================================
     // RESPUESTAS
-    // ======================================
 
     for (
         let i = 0;
@@ -764,7 +703,6 @@ function getCategoryName(category) {
 function startTimer() {
 
     clearInterval(timer);
-
 
     const difficulty =
         difficultySettings[
@@ -933,9 +871,7 @@ function selectAnswer(index) {
     });
 
 
-    // ======================================
     // CORRECTA
-    // ======================================
 
     if (
         index ===
@@ -963,14 +899,10 @@ function selectAnswer(index) {
         }
 
 
-        // PUNTOS
-
         score +=
             100 +
             (timeLeft * 5);
 
-
-        // BONUS RACHA
 
         if (
             currentStreak >= 3
@@ -997,9 +929,7 @@ function selectAnswer(index) {
     }
 
 
-    // ======================================
     // INCORRECTA
-    // ======================================
 
     else {
 
@@ -1108,7 +1038,6 @@ function finishGame() {
     clearInterval(timer);
 
     stopMusic();
-
 
     showScreen(
         "resultScreen"
@@ -1299,19 +1228,11 @@ function restartGame() {
     closeGameMenu();
 
 
-    // ======================================
-    // GUARDAR LA PRIMERA PREGUNTA ANTERIOR
-    // ======================================
-
     const previousFirstQuestion =
         gameQuestions.length > 0
             ? gameQuestions[0].question
             : null;
 
-
-    // ======================================
-    // REINICIAR ESTADÍSTICAS
-    // ======================================
 
     currentQuestion = 0;
 
@@ -1329,10 +1250,6 @@ function restartGame() {
             ? difficultySettings[selectedDifficulty].time
             : 50;
 
-
-    // ======================================
-    // PREPARAR NUEVA PARTIDA
-    // ======================================
 
     prepareQuestions(
         previousFirstQuestion
@@ -1714,10 +1631,40 @@ function showJoinRoom() {
 
 
 // ==========================================
-// CREAR SALA
+// CREAR SALA REAL CON FIREBASE
 // ==========================================
 
 function createRoom() {
+
+    if (
+        typeof firebase === "undefined" ||
+        typeof db === "undefined"
+    ) {
+
+        alert(
+            "❌ Firebase no está conectado. Revisa el index.html."
+        );
+
+        return;
+
+    }
+
+
+    const createButton =
+        document.querySelector(
+            '#multiplayerScreen .main-button'
+        );
+
+
+    if (createButton) {
+
+        createButton.disabled = true;
+
+        createButton.textContent =
+            "⏳ Creando sala...";
+
+    }
+
 
     roomCode =
         generateRoomCode();
@@ -1725,47 +1672,134 @@ function createRoom() {
     isHost = true;
 
 
-    const display =
-        document.getElementById(
-            "displayRoomCode"
+    roomRef =
+        db.ref(
+            "rooms/" + roomCode
         );
 
 
-    if (display) {
+    const roomData = {
 
-        display.textContent =
-            roomCode;
+        host: {
 
-    }
+            name:
+                playerName ||
+                "Jugador 1",
+
+            connected: true
+
+        },
+
+        guest: null,
+
+        status: "waiting",
+
+        createdAt:
+            firebase.database.ServerValue.TIMESTAMP
+
+    };
 
 
-    const host =
-        document.getElementById(
-            "hostName"
-        );
+    roomRef
+        .set(roomData)
+        .then(() => {
+
+            console.log(
+                "✅ Sala creada:",
+                roomCode
+            );
 
 
-    if (host) {
-
-        host.textContent =
-            playerName ||
-            "Jugador 1";
-
-    }
+            const display =
+                document.getElementById(
+                    "displayRoomCode"
+                );
 
 
-    showScreen(
-        "roomScreen"
-    );
+            if (display) {
+
+                display.textContent =
+                    roomCode;
+
+            }
+
+
+            const host =
+                document.getElementById(
+                    "hostName"
+                );
+
+
+            if (host) {
+
+                host.textContent =
+                    playerName ||
+                    "Jugador 1";
+
+            }
+
+
+            resetRoomUI();
+
+            showScreen(
+                "roomScreen"
+            );
+
+
+            listenToRoom();
+
+        })
+        .catch(error => {
+
+            console.error(
+                "❌ Error creando sala:",
+                error
+            );
+
+            roomCode = "";
+
+            isHost = false;
+
+            alert(
+                "No se pudo crear la sala. Revisa la conexión con Firebase."
+            );
+
+        })
+        .finally(() => {
+
+            if (createButton) {
+
+                createButton.disabled = false;
+
+                createButton.textContent =
+                    "🏠 Crear sala";
+
+            }
+
+        });
 
 }
 
 
 // ==========================================
-// UNIRSE
+// UNIRSE A SALA REAL
 // ==========================================
 
 function joinRoom() {
+
+    if (
+        typeof firebase === "undefined" ||
+        typeof db === "undefined"
+    ) {
+
+        alert(
+            "❌ Firebase no está conectado."
+        );
+
+        return;
+
+    }
+
 
     const input =
         document.getElementById(
@@ -1799,49 +1833,695 @@ function joinRoom() {
     }
 
 
-    roomCode =
-        code;
-
-    isHost = false;
-
-
-    const display =
-        document.getElementById(
-            "displayRoomCode"
+    const joinButton =
+        document.querySelector(
+            '#joinRoomBox .main-button'
         );
 
 
-    if (display) {
+    if (joinButton) {
 
-        display.textContent =
-            roomCode;
+        joinButton.disabled = true;
+
+        joinButton.textContent =
+            "⏳ Entrando...";
 
     }
 
 
-    const guest =
-        document.getElementById(
-            "guestName"
+    const joiningRef =
+        db.ref(
+            "rooms/" + code
         );
 
 
-    if (guest) {
+    joiningRef
+        .once("value")
+        .then(snapshot => {
 
-        guest.textContent =
-            playerName ||
-            "Jugador 2";
+            if (!snapshot.exists()) {
+
+                throw new Error(
+                    "NOT_FOUND"
+                );
+
+            }
+
+
+            const room =
+                snapshot.val();
+
+
+            if (
+                room.guest
+            ) {
+
+                throw new Error(
+                    "FULL"
+                );
+
+            }
+
+
+            roomCode =
+                code;
+
+            isHost = false;
+
+            roomRef =
+                joiningRef;
+
+
+            return joiningRef
+                .update({
+
+                    guest: {
+
+                        name:
+                            playerName ||
+                            "Jugador 2",
+
+                        connected: true
+
+                    }
+
+                });
+
+        })
+        .then(() => {
+
+            console.log(
+                "✅ Entraste a la sala:",
+                roomCode
+            );
+
+
+            const display =
+                document.getElementById(
+                    "displayRoomCode"
+                );
+
+
+            if (display) {
+
+                display.textContent =
+                    roomCode;
+
+            }
+
+
+            resetRoomUI();
+
+            showScreen(
+                "roomScreen"
+            );
+
+
+            listenToRoom();
+
+        })
+        .catch(error => {
+
+            console.error(
+                "❌ Error entrando:",
+                error
+            );
+
+
+            if (
+                error.message ===
+                "NOT_FOUND"
+            ) {
+
+                alert(
+                    "❌ Esa sala no existe."
+                );
+
+            }
+            else if (
+                error.message ===
+                "FULL"
+            ) {
+
+                alert(
+                    "❌ Esa sala ya tiene dos jugadores."
+                );
+
+            }
+            else {
+
+                alert(
+                    "❌ No se pudo entrar a la sala."
+                );
+
+            }
+
+        })
+        .finally(() => {
+
+            if (joinButton) {
+
+                joinButton.disabled = false;
+
+                joinButton.textContent =
+                    "Entrar a la sala";
+
+            }
+
+        });
+
+}
+
+
+// ==========================================
+// ESCUCHAR CAMBIOS DE LA SALA
+// ==========================================
+
+function listenToRoom() {
+
+    if (!roomCode) {
+
+        return;
+
+    }
+
+
+    if (roomListener && roomRef) {
+
+        roomRef.off(
+            "value",
+            roomListener
+        );
+
+    }
+
+
+    roomRef =
+        db.ref(
+            "rooms/" + roomCode
+        );
+
+
+    roomListener =
+        snapshot => {
+
+            if (!snapshot.exists()) {
+
+                alert(
+                    "⚠️ La sala ya no existe."
+                );
+
+                stopRoomListener();
+
+                roomCode = "";
+
+                isHost = false;
+
+                showScreen(
+                    "multiplayerScreen"
+                );
+
+                return;
+
+            }
+
+
+            const room =
+                snapshot.val();
+
+
+            const guestNameElement =
+                document.getElementById(
+                    "guestName"
+                );
+
+
+            const waitingText =
+                document.getElementById(
+                    "waitingText"
+                );
+
+
+            const startButton =
+                document.getElementById(
+                    "startMultiplayerButton"
+                );
+
+
+            const opponentName =
+                document.getElementById(
+                    "opponentName"
+                );
+
+
+            // =================================
+            // JUGADOR 2 CONECTADO
+            // =================================
+
+            if (room.guest) {
+
+                const name =
+                    room.guest.name ||
+                    "Jugador 2";
+
+
+                if (guestNameElement) {
+
+                    guestNameElement.textContent =
+                        name;
+
+                }
+
+
+                if (waitingText) {
+
+                    if (isHost) {
+
+                        waitingText.textContent =
+                            "🟢 ¡Jugador 2 conectado!";
+
+                    }
+                    else {
+
+                        waitingText.textContent =
+                            "🟢 Conectado. Esperando al anfitrión...";
+
+                    }
+
+                }
+
+
+                if (opponentName) {
+
+                    opponentName.textContent =
+                        name;
+
+                }
+
+
+                // SOLO EL ANFITRIÓN VE INICIAR
+
+                if (
+                    isHost &&
+                    room.status === "waiting"
+                ) {
+
+                    if (startButton) {
+
+                        startButton.classList.remove(
+                            "hidden"
+                        );
+
+                        startButton.disabled =
+                            false;
+
+                    }
+
+                }
+                else {
+
+                    if (startButton) {
+
+                        startButton.classList.add(
+                            "hidden"
+                        );
+
+                    }
+
+                }
+
+            }
+            else {
+
+                if (guestNameElement) {
+
+                    guestNameElement.textContent =
+                        "Esperando...";
+
+                }
+
+
+                if (waitingText) {
+
+                    waitingText.textContent =
+                        "⏳ Esperando al otro jugador...";
+
+                }
+
+
+                if (startButton) {
+
+                    startButton.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+
+
+            // =================================
+            // PARTIDA INICIADA
+            // =================================
+
+            if (
+                room.status ===
+                "playing"
+            ) {
+
+                if (
+                    room.settings
+                ) {
+
+                    selectedCategory =
+                        room.settings.category ||
+                        "mixed";
+
+                    selectedAmount =
+                        Number(
+                            room.settings.amount
+                        ) || 10;
+
+                    selectedDifficulty =
+                        room.settings.difficulty ||
+                        "easy";
+
+                }
+
+
+                if (
+                    !document
+                        .getElementById(
+                            "gameScreen"
+                        )
+                        .classList
+                        .contains("active")
+                ) {
+
+                    startMultiplayerLocally();
+
+                }
+
+            }
+
+        };
+
+
+    roomRef.on(
+        "value",
+        roomListener
+    );
+
+
+    // ==========================================
+    // PRESENCIA
+    // ==========================================
+
+    if (isHost) {
+
+        roomRef
+            .child("host")
+            .onDisconnect()
+            .update({
+                connected: false
+            });
+
+    }
+    else {
+
+        roomRef
+            .child("guest")
+            .onDisconnect()
+            .update({
+                connected: false
+            });
+
+    }
+
+}
+
+
+// ==========================================
+// INICIAR PARTIDA - SOLO ANFITRIÓN
+// ==========================================
+
+function startMultiplayerGame() {
+
+    if (!isHost) {
+
+        alert(
+            "Solo el anfitrión puede iniciar la partida."
+        );
+
+        return;
+
+    }
+
+
+    if (!roomCode || !roomRef) {
+
+        alert(
+            "No hay una sala activa."
+        );
+
+        return;
+
+    }
+
+
+    const startButton =
+        document.getElementById(
+            "startMultiplayerButton"
+        );
+
+
+    if (startButton) {
+
+        startButton.disabled =
+            true;
+
+        startButton.textContent =
+            "⏳ Iniciando...";
+
+    }
+
+
+    // ======================================
+    // CONFIGURACIÓN DE LA PARTIDA
+    // ======================================
+
+    const settings = {
+
+        category:
+            selectedCategory || "mixed",
+
+        amount:
+            Number(selectedAmount) || 10,
+
+        difficulty:
+            selectedDifficulty || "easy"
+
+    };
+
+
+    roomRef
+        .update({
+
+            status: "playing",
+
+            settings: settings,
+
+            startedAt:
+                firebase.database.ServerValue.TIMESTAMP
+
+        })
+        .then(() => {
+
+            console.log(
+                "🎮 Partida iniciada."
+            );
+
+
+            startMultiplayerLocally();
+
+        })
+        .catch(error => {
+
+            console.error(
+                "❌ Error iniciando partida:",
+                error
+            );
+
+            alert(
+                "No se pudo iniciar la partida."
+            );
+
+
+            if (startButton) {
+
+                startButton.disabled =
+                    false;
+
+                startButton.textContent =
+                    "🎮 Iniciar partida";
+
+            }
+
+        });
+
+}
+
+
+// ==========================================
+// INICIAR JUEGO LOCAL DEL MULTIJUGADOR
+// ==========================================
+
+function startMultiplayerLocally() {
+
+    clearInterval(timer);
+
+
+    prepareQuestions();
+
+
+    if (
+        gameQuestions.length === 0
+    ) {
+
+        alert(
+            "No hay suficientes preguntas para esta configuración."
+        );
+
+        return;
+
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    correctAnswers = 0;
+
+    wrongAnswers = 0;
+
+    currentStreak = 0;
+
+
+    const opponentBar =
+        document.getElementById(
+            "opponentBar"
+        );
+
+
+    if (opponentBar) {
+
+        opponentBar.classList.remove(
+            "hidden"
+        );
 
     }
 
 
     showScreen(
-        "roomScreen"
+        "gameScreen"
     );
 
 
-    alert(
-        "Sala encontrada. El multijugador real se conectará con Firebase en el siguiente paso."
+    updateScore();
+
+    updateStreak();
+
+    startMusic();
+
+    showQuestion();
+
+
+    console.log(
+        "🎮 Multijugador iniciado."
     );
+
+}
+
+
+// ==========================================
+// DETENER ESCUCHADOR
+// ==========================================
+
+function stopRoomListener() {
+
+    if (
+        roomRef &&
+        roomListener
+    ) {
+
+        roomRef.off(
+            "value",
+            roomListener
+        );
+
+    }
+
+    roomListener = null;
+
+}
+
+
+// ==========================================
+// LIMPIAR CONEXIÓN
+// ==========================================
+
+function cleanupRoomConnection(removeRoom = false) {
+
+    if (!roomRef) {
+
+        return;
+
+    }
+
+
+    stopRoomListener();
+
+
+    if (removeRoom) {
+
+        roomRef
+            .remove()
+            .catch(error => {
+
+                console.error(
+                    "Error eliminando sala:",
+                    error
+                );
+
+            });
+
+    }
+    else {
+
+        if (isHost) {
+
+            roomRef
+                .child("host")
+                .update({
+                    connected: false
+                })
+                .catch(() => {});
+
+        }
+        else {
+
+            roomRef
+                .child("guest")
+                .remove()
+                .catch(() => {});
+
+        }
+
+    }
+
+
+    roomRef = null;
 
 }
 
@@ -1881,7 +2561,62 @@ function generateRoomCode() {
 
 
 // ==========================================
-// COPIAR
+// REINICIAR INTERFAZ DE SALA
+// ==========================================
+
+function resetRoomUI() {
+
+    const guest =
+        document.getElementById(
+            "guestName"
+        );
+
+    const waiting =
+        document.getElementById(
+            "waitingText"
+        );
+
+    const startButton =
+        document.getElementById(
+            "startMultiplayerButton"
+        );
+
+
+    if (guest) {
+
+        guest.textContent =
+            "Esperando...";
+
+    }
+
+
+    if (waiting) {
+
+        waiting.textContent =
+            "⏳ Esperando al otro jugador...";
+
+    }
+
+
+    if (startButton) {
+
+        startButton.classList.add(
+            "hidden"
+        );
+
+        startButton.disabled =
+            false;
+
+        startButton.textContent =
+            "🎮 Iniciar partida";
+
+    }
+
+}
+
+
+// ==========================================
+// COPIAR CÓDIGO
 // ==========================================
 
 function copyRoomCode() {
@@ -1893,23 +2628,37 @@ function copyRoomCode() {
     }
 
 
-    navigator.clipboard
-        .writeText(roomCode)
-        .then(() => {
+    if (
+        navigator.clipboard
+    ) {
 
-            alert(
-                "¡Código copiado! 📋"
-            );
+        navigator.clipboard
+            .writeText(roomCode)
+            .then(() => {
 
-        })
-        .catch(() => {
+                alert(
+                    "¡Código copiado! 📋"
+                );
 
-            alert(
-                "Código: " +
-                roomCode
-            );
+            })
+            .catch(() => {
 
-        });
+                alert(
+                    "Código: " +
+                    roomCode
+                );
+
+            });
+
+    }
+    else {
+
+        alert(
+            "Código: " +
+            roomCode
+        );
+
+    }
 
 }
 
@@ -1920,9 +2669,33 @@ function copyRoomCode() {
 
 function leaveRoom() {
 
+    if (roomRef) {
+
+        if (isHost) {
+
+            cleanupRoomConnection(true);
+
+        }
+        else {
+
+            cleanupRoomConnection(false);
+
+        }
+
+    }
+
+
     roomCode = "";
 
     isHost = false;
+
+    roomRef = null;
+
+    roomListener = null;
+
+
+    resetRoomUI();
+
 
     showScreen(
         "multiplayerScreen"

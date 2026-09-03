@@ -2135,6 +2135,155 @@ const questions = [
         question: "¿Cuántos grados tiene un ángulo recto?",
         answers: ["45", "60", "90", "180"],
         correct: 2
-    }  ];
+    }     // ==========================================
+    // 🎮 MULTIJUGADOR — 20 PREGUNTAS DE PRUEBA
+    // ==========================================
+
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos días tiene una semana?",
+        answers: ["5", "6", "7", "8"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el océano más grande del mundo?",
+        answers: ["Atlántico", "Pacífico", "Índico", "Ártico"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "medium",
+        question: "¿Cuál es el metal cuyo símbolo químico es Fe?",
+        answers: ["Oro", "Hierro", "Plata", "Cobre"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "medium",
+        question: "¿Cuántos lados tiene un hexágono?",
+        answers: ["5", "6", "7", "8"],
+        correct: 1
+    },
+
+    {
+        category: "colombia",
+        difficulty: "easy",
+        question: "¿Cuál es la capital de Colombia?",
+        answers: ["Medellín", "Cali", "Bogotá", "Cartagena"],
+        correct: 2
+    },
+    {
+        category: "colombia",
+        difficulty: "easy",
+        question: "¿Cuál es la moneda de Colombia?",
+        answers: ["Dólar", "Peso colombiano", "Euro", "Sol"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "medium",
+        question: "¿Cuál es el río más largo que atraviesa Colombia?",
+        answers: ["Río Magdalena", "Río Amazonas", "Río Cauca", "Río Meta"],
+        correct: 0
+    },
+
+    {
+        category: "science",
+        difficulty: "easy",
+        question: "¿Qué planeta es conocido como el planeta rojo?",
+        answers: ["Venus", "Marte", "Júpiter", "Saturno"],
+        correct: 1
+    },
+    {
+        category: "science",
+        difficulty: "easy",
+        question: "¿Qué necesitan principalmente las plantas para realizar la fotosíntesis?",
+        answers: ["Luz", "Hierro", "Sal", "Petróleo"],
+        correct: 0
+    },
+    {
+        category: "science",
+        difficulty: "medium",
+        question: "¿Cuál es el órgano encargado de bombear la sangre por el cuerpo?",
+        answers: ["Pulmón", "Cerebro", "Corazón", "Hígado"],
+        correct: 2
+    },
+
+    {
+        category: "history",
+        difficulty: "easy",
+        question: "¿En qué año llegó Cristóbal Colón a América?",
+        answers: ["1492", "1500", "1520", "1450"],
+        correct: 0
+    },
+    {
+        category: "history",
+        difficulty: "medium",
+        question: "¿Quién fue conocido como el Libertador?",
+        answers: ["Simón Bolívar", "Napoleón Bonaparte", "Julio César", "Miguel Hidalgo"],
+        correct: 0
+    },
+
+    {
+        category: "sports",
+        difficulty: "easy",
+        question: "¿Cuántos jugadores tiene un equipo de fútbol en el campo?",
+        answers: ["9", "10", "11", "12"],
+        correct: 2
+    },
+    {
+        category: "sports",
+        difficulty: "easy",
+        question: "¿En qué deporte se utiliza una raqueta?",
+        answers: ["Tenis", "Fútbol", "Natación", "Boxeo"],
+        correct: 0
+    },
+    {
+        category: "sports",
+        difficulty: "medium",
+        question: "¿Cuántos anillos tiene el símbolo de los Juegos Olímpicos?",
+        answers: ["4", "5", "6", "7"],
+        correct: 1
+    },
+
+    {
+        category: "technology",
+        difficulty: "easy",
+        question: "¿Qué dispositivo se utiliza principalmente para escribir en un ordenador?",
+        answers: ["Monitor", "Teclado", "Altavoz", "Router"],
+        correct: 1
+    },
+    {
+        category: "technology",
+        difficulty: "easy",
+        question: "¿Qué significa Wi-Fi?",
+        answers: ["Una tecnología de conexión inalámbrica", "Un tipo de batería", "Un sistema operativo", "Un programa de edición"],
+        correct: 0
+    },
+    {
+        category: "technology",
+        difficulty: "medium",
+        question: "¿Qué lenguaje se utiliza principalmente para dar estructura a una página web?",
+        answers: ["HTML", "MP3", "JPEG", "PDF"],
+        correct: 0
+    },
+
+    {
+        category: "geography",
+        difficulty: "easy",
+        question: "¿Cuál es el país más grande del mundo por superficie?",
+        answers: ["China", "Canadá", "Rusia", "Estados Unidos"],
+        correct: 2
+    },
+    {
+        category: "geography",
+        difficulty: "medium",
+        question: "¿Cuál es la capital de Francia?",
+        answers: ["Roma", "Madrid", "París", "Berlín"],
+        correct: 2
+    } ];
 
 window.questionBank = questions;

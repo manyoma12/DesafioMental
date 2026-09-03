@@ -668,7 +668,7 @@ input:focus {
 }
 
 /* =========================================================
-   🎯 DIFICULTAD — CATÁLOGO NUEVO
+   🎯 DIFICULTAD
 ========================================================= */
 
 #difficultyScreen {
@@ -709,8 +709,6 @@ input:focus {
   margin-bottom: 20px;
 }
 
-/* Contenedor del catálogo */
-
 .difficulty-grid {
   display: grid;
 
@@ -720,8 +718,6 @@ input:focus {
 
   margin-top: 2px;
 }
-
-/* Tarjeta */
 
 .difficulty-card {
   min-height: 158px;
@@ -760,8 +756,6 @@ input:focus {
     0 12px 30px rgba(0,0,0,.18);
 }
 
-/* Brillo interno */
-
 .difficulty-card::before {
   content: "";
 
@@ -782,8 +776,6 @@ input:focus {
   transition: .25s;
 }
 
-/* Línea inferior */
-
 .difficulty-card::after {
   content: "";
 
@@ -802,8 +794,6 @@ input:focus {
 
   transition: .25s;
 }
-
-/* Icono */
 
 .difficulty-card > span {
   width: 54px;
@@ -828,8 +818,6 @@ input:focus {
   transition: .25s;
 }
 
-/* Nombre */
-
 .difficulty-card strong {
   font-size: 18px;
 
@@ -837,8 +825,6 @@ input:focus {
 
   letter-spacing: -.3px;
 }
-
-/* Tiempo */
 
 .difficulty-card small {
   color: #c7cce2;
@@ -854,8 +840,6 @@ input:focus {
   border-radius: 8px;
 }
 
-/* Descripción */
-
 .difficulty-card em {
   color: var(--muted);
 
@@ -868,9 +852,7 @@ input:focus {
   text-align: center;
 }
 
-/* =========================================================
-   🟢 FÁCIL
-========================================================= */
+/* FÁCIL */
 
 .difficulty-card.easy {
   border-color: rgba(32,217,162,.20);
@@ -897,9 +879,7 @@ input:focus {
   border-color: rgba(32,217,162,.20);
 }
 
-/* =========================================================
-   🟡 MEDIO
-========================================================= */
+/* MEDIO */
 
 .difficulty-card.medium {
   border-color: rgba(255,200,87,.22);
@@ -926,9 +906,7 @@ input:focus {
   border-color: rgba(255,200,87,.20);
 }
 
-/* =========================================================
-   🔴 DIFÍCIL
-========================================================= */
+/* DIFÍCIL */
 
 .difficulty-card.hard {
   border-color: rgba(255,92,122,.22);
@@ -955,9 +933,7 @@ input:focus {
   border-color: rgba(255,92,122,.20);
 }
 
-/* =========================================================
-   ☠️ DIOS
-========================================================= */
+/* DIOS */
 
 .difficulty-card.god {
   border-color: rgba(139,124,246,.35);
@@ -1005,10 +981,6 @@ input:focus {
   box-shadow:
     0 0 25px rgba(108,92,231,.18);
 }
-
-/* =========================================================
-   EFECTOS DEL CATÁLOGO
-========================================================= */
 
 .difficulty-card:hover {
   transform: translateY(-6px) scale(1.015);
@@ -1261,6 +1233,8 @@ input:focus {
 
   justify-content: space-between;
 
+  align-items: center;
+
   gap: 8px;
 
   margin-bottom: 7px;
@@ -1309,6 +1283,205 @@ input:focus {
   font-size: 13px;
 
   font-weight: 900;
+}
+
+/* =========================================================
+   ⏱️ RELOJ ANIMADO
+========================================================= */
+
+#timer {
+  position: relative;
+
+  min-width: 68px;
+  height: 40px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 12px;
+
+  border-radius: 14px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 900;
+
+  letter-spacing: .5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(108,92,231,.30),
+      rgba(0,210,255,.12)
+    );
+
+  border: 1px solid rgba(139,124,246,.45);
+
+  box-shadow:
+    0 0 15px rgba(108,92,231,.20),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  transition:
+    background .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease;
+
+  animation: relojFlotando 2s ease-in-out infinite;
+}
+
+@keyframes relojFlotando {
+
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Brillo exterior */
+
+#timer::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -3px;
+
+  border-radius: 17px;
+
+  border: 1px solid rgba(139,124,246,.18);
+
+  opacity: .7;
+
+  animation: relojBrillo 2s ease-in-out infinite;
+
+  pointer-events: none;
+}
+
+@keyframes relojBrillo {
+
+  0%, 100% {
+    opacity: .25;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .8;
+    transform: scale(1.04);
+  }
+}
+
+/* =========================================================
+   🟡 MENOS DE 10 SEGUNDOS
+========================================================= */
+
+#timer.warning {
+
+  color: #ffc857;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,200,87,.25),
+      rgba(255,170,0,.10)
+    );
+
+  border-color: rgba(255,200,87,.70);
+
+  box-shadow:
+    0 0 20px rgba(255,200,87,.38);
+
+  animation: relojWarning .65s ease-in-out infinite;
+}
+
+@keyframes relojWarning {
+
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* =========================================================
+   🔴 MENOS DE 5 SEGUNDOS
+========================================================= */
+
+#timer.danger {
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,92,122,.45),
+      rgba(180,25,60,.18)
+    );
+
+  border-color: rgba(255,92,122,.90);
+
+  box-shadow:
+    0 0 25px rgba(255,92,122,.55);
+
+  animation: relojDanger .4s ease-in-out infinite;
+}
+
+@keyframes relojDanger {
+
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+/* =========================================================
+   💀 TIEMPO AGOTADO
+========================================================= */
+
+#timer.time-up {
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff5c7a,
+      #c72c52
+    );
+
+  border-color: #ff9aae;
+
+  box-shadow:
+    0 0 30px rgba(255,92,122,.70);
+
+  animation: relojAgotado .22s ease-in-out infinite;
+}
+
+@keyframes relojAgotado {
+
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 /* =========================================================
@@ -1891,6 +2064,13 @@ input:focus {
 
   .difficulty-card strong {
     font-size: 16px;
+  }
+
+  #timer {
+    min-width: 60px;
+    height: 36px;
+    font-size: 14px;
+    padding: 0 9px;
   }
 }
 

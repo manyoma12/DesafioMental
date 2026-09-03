@@ -514,6 +514,15 @@
         ⏳ Esperando al otro jugador...
       </p>
 
+      <!-- BOTÓN PARA EL ANFITRIÓN -->
+      <button
+        id="startMultiplayerButton"
+        class="main-button hidden"
+        onclick="startMultiplayerGame()"
+      >
+        🎮 Iniciar partida
+      </button>
+
       <button
         class="danger-button"
         onclick="leaveRoom()"
@@ -571,7 +580,10 @@
       </header>
 
 
-      <div class="opponent-bar hidden" id="opponentBar">
+      <div
+        class="opponent-bar hidden"
+        id="opponentBar"
+      >
 
         <span>👤</span>
 
@@ -592,7 +604,10 @@
 
       <main class="question-area">
 
-        <div class="category-label" id="currentCategory">
+        <div
+          class="category-label"
+          id="currentCategory"
+        >
           CULTURA GENERAL
         </div>
 
@@ -600,7 +615,10 @@
           Cargando pregunta...
         </h2>
 
-        <div id="answersContainer" class="answers-container">
+        <div
+          id="answersContainer"
+          class="answers-container"
+        >
 
           <button
             class="answer"
@@ -688,8 +706,6 @@
       </div>
 
 
-      <!-- 🏆 RÉCORD PERSONAL -->
-
       <div class="best-score">
 
         🏆 Récord personal:
@@ -700,8 +716,6 @@
 
       </div>
 
-
-      <!-- 🔥 MEJOR RACHA -->
 
       <div class="best-streak">
 
@@ -755,7 +769,10 @@
       </div>
 
 
-      <p id="resultMessage" class="result-message">
+      <p
+        id="resultMessage"
+        class="result-message"
+      >
         ¡Buen trabajo!
       </p>
 
@@ -901,14 +918,59 @@
       loop
       preload="auto"
     >
-      <source src="music.mp3" type="audio/mpeg">
+      <source
+        src="music.mp3"
+        type="audio/mpeg"
+      >
     </audio>
 
   </div>
 
 
   <!-- =========================
-       JAVASCRIPT
+       FIREBASE
+  ========================== -->
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <script>
+
+    const firebaseConfig = {
+
+      apiKey: "AIzaSyDJPtNgmsYQVJIpRRvzlZx35ofuI2UokEc",
+
+      authDomain:
+        "desafio-mentak.firebaseapp.com",
+
+      projectId:
+        "desafio-mentak",
+
+      storageBucket:
+        "desafio-mentak.firebasestorage.app",
+
+      messagingSenderId:
+        "250003028982",
+
+      appId:
+        "1:250003028982:web:ae687b62cbb71e8022e5d7"
+
+    };
+
+
+    firebase.initializeApp(
+      firebaseConfig
+    );
+
+
+    const db =
+      firebase.database();
+
+  </script>
+
+
+  <!-- =========================
+       JAVASCRIPT DEL JUEGO
   ========================== -->
 
   <script src="questions.js"></script>

@@ -253,7 +253,7 @@ function startGame(amount) {
     if (gameQuestions.length === 0) {
 
         alert(
-            "No hay preguntas disponibles para esta dificultad."
+            "No hay preguntas disponibles para esta categoría y dificultad."
         );
 
         showScreen("difficultyScreen");
@@ -300,49 +300,220 @@ function startGame(amount) {
 
 function prepareQuestions() {
 
+    // Comprobar que exista el banco
+    if (
+        !window.questionBank ||
+        !Array.isArray(window.questionBank)
+    ) {
+
+        console.error(
+            "❌ No se encontró window.questionBank"
+        );
+
+        gameQuestions = [];
+
+        return;
+
+    }
+
+
+    // Copiar banco completo
     let available =
         [...window.questionBank];
 
+
+    // ======================================
     // FILTRAR POR CATEGORÍA
+    // ======================================
 
     if (selectedCategory !== "mixed") {
 
         available =
             available.filter(question =>
-                question.category ===
-                selectedCategory
+                question.category === selectedCategory
             );
 
     }
 
 
+    // ======================================
     // FILTRAR POR DIFICULTAD
+    // ======================================
 
     available =
         available.filter(question =>
-            question.difficulty ===
+            question.difficulty === selectedDifficulty
+        );
+
+
+    // ======================================
+    // COMPROBAR DISPONIBILIDAD
+    // ======================================
+
+    if (available.length === 0) {
+
+        console.warn(
+            "⚠️ No existen preguntas para:",
+            selectedCategory,
             selectedDifficulty
         );
 
+        gameQuestions = [];
 
-    // MEZCLAR
+        return;
 
-    available.sort(
-        () => Math.random() - 0.5
-    );
+    }
 
 
-    // CANTIDAD
+    // ======================================
+    // MEZCLAR PREGUNTAS
+    // ======================================
 
-    const amount =
-        Math.min(
-            selectedAmount,
-            available.length
+    shuffleArray(available);
+
+
+    // ======================================
+    // CREAR LA PARTIDA
+    // ======================================
+
+    gameQuestions = [];
+
+
+    /*
+        IMPORTANTE:
+
+        Si hay menos preguntas disponibles
+        que las seleccionadas, reutilizamos
+        las preguntas para completar la partida.
+
+        Ejemplo:
+
+        Hay 2 preguntas disponibles.
+        El jugador selecciona 10.
+
+        Resultado:
+        10 preguntas en la partida.
+
+        Las preguntas pueden repetirse,
+        pero el orden será aleatorio.
+    */
+
+
+    for (
+        let i = 0;
+        i < selectedAmount;
+        i++
+    ) {
+
+        const originalQuestion =
+            available[
+                i % available.length
+            ];
+
+
+        // Crear copia para evitar modificar
+        // accidentalmente la pregunta original
+        const newQuestion = {
+
+            category:
+                originalQuestion.category,
+
+            difficulty:
+                originalQuestion.difficulty,
+
+            question:
+                originalQuestion.question,
+
+            answers:
+                [...originalQuestion.answers],
+
+            correct:
+                originalQuestion.correct
+
+        };
+
+
+        gameQuestions.push(
+            newQuestion
         );
 
+    }
 
-    gameQuestions =
-        available.slice(0, amount);
+
+    // ======================================
+    // MEZCLAR NUEVAMENTE
+    // ======================================
+
+    shuffleArray(gameQuestions);
+
+
+    // ======================================
+    // SEGURIDAD
+    // ======================================
+
+    if (
+        gameQuestions.length !==
+        selectedAmount
+    ) {
+
+        console.error(
+            "❌ Error preparando preguntas."
+        );
+
+        console.error(
+            "Solicitadas:",
+            selectedAmount
+        );
+
+        console.error(
+            "Preparadas:",
+            gameQuestions.length
+        );
+
+    }
+    else {
+
+        console.log(
+            "✅ Partida preparada:",
+            gameQuestions.length,
+            "preguntas"
+        );
+
+    }
+
+}
+
+
+// ==========================================
+// MEZCLAR ARRAY
+// ==========================================
+
+function shuffleArray(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
 
 }
 
@@ -355,6 +526,11 @@ function showQuestion() {
 
     clearInterval(timer);
 
+
+    // ======================================
+    // COMPROBAR FINAL
+    // ======================================
+
     if (
         currentQuestion >=
         gameQuestions.length
@@ -366,11 +542,14 @@ function showQuestion() {
 
     }
 
+
     const question =
         gameQuestions[currentQuestion];
 
 
+    // ======================================
     // CONTADOR
+    // ======================================
 
     const counter =
         document.getElementById(
@@ -385,7 +564,9 @@ function showQuestion() {
     }
 
 
+    // ======================================
     // PROGRESO
+    // ======================================
 
     const progress =
         document.getElementById(
@@ -404,7 +585,9 @@ function showQuestion() {
     }
 
 
+    // ======================================
     // CATEGORÍA
+    // ======================================
 
     const category =
         document.getElementById(
@@ -421,7 +604,9 @@ function showQuestion() {
     }
 
 
+    // ======================================
     // PREGUNTA
+    // ======================================
 
     const questionText =
         document.getElementById(
@@ -436,9 +621,15 @@ function showQuestion() {
     }
 
 
+    // ======================================
     // RESPUESTAS
+    // ======================================
 
-    for (let i = 0; i < 4; i++) {
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
 
         const answer =
             document.getElementById(
@@ -502,6 +693,7 @@ function getCategoryName(category) {
 
     };
 
+
     return (
         names[category] ||
         "Desafío Mixto"
@@ -517,6 +709,7 @@ function getCategoryName(category) {
 function startTimer() {
 
     clearInterval(timer);
+
 
     const difficulty =
         difficultySettings[
@@ -553,12 +746,17 @@ function startTimer() {
 }
 
 
+// ==========================================
+// ACTUALIZAR TEMPORIZADOR
+// ==========================================
+
 function updateTimer() {
 
     const timerElement =
         document.getElementById(
             "timer"
         );
+
 
     if (timerElement) {
 
@@ -576,8 +774,19 @@ function updateTimer() {
 
 function timeOut() {
 
+    if (
+        currentQuestion >=
+        gameQuestions.length
+    ) {
+
+        return;
+
+    }
+
+
     const question =
         gameQuestions[currentQuestion];
+
 
     const buttons =
         document.querySelectorAll(
@@ -613,6 +822,7 @@ function timeOut() {
     currentStreak = 0;
 
     updateStreak();
+
 
     vibrate([
         100,
@@ -801,6 +1011,7 @@ function updateScore() {
             "gameScore"
         );
 
+
     if (scoreElement) {
 
         scoreElement.textContent =
@@ -822,6 +1033,7 @@ function updateStreak() {
             "currentStreak"
         );
 
+
     if (streakElement) {
 
         streakElement.textContent =
@@ -841,6 +1053,7 @@ function finishGame() {
     clearInterval(timer);
 
     stopMusic();
+
 
     showScreen(
         "resultScreen"
@@ -981,6 +1194,7 @@ function finishGame() {
             "bestScore"
         );
 
+
     if (bestScoreElement) {
 
         bestScoreElement.textContent =
@@ -994,6 +1208,7 @@ function finishGame() {
             "bestStreak"
         );
 
+
     if (bestStreakElement) {
 
         bestStreakElement.textContent =
@@ -1006,6 +1221,7 @@ function finishGame() {
         document.getElementById(
             "progressFill"
         );
+
 
     if (progress) {
 
@@ -1023,31 +1239,35 @@ function finishGame() {
 
 function restartGame() {
 
-    // Detener cualquier temporizador anterior
     clearInterval(timer);
 
-    // Cerrar menú por si estaba abierto
     closeGameMenu();
 
-    // Reiniciar completamente la partida
+
     currentQuestion = 0;
+
     score = 0;
+
     correctAnswers = 0;
+
     wrongAnswers = 0;
+
     currentStreak = 0;
+
+
     timeLeft =
         difficultySettings[selectedDifficulty]
             ? difficultySettings[selectedDifficulty].time
             : 50;
 
-    // Volver a preparar las preguntas
+
     prepareQuestions();
 
-    // Comprobar que existan preguntas
+
     if (gameQuestions.length === 0) {
 
         alert(
-            "No hay preguntas disponibles para esta dificultad."
+            "No hay preguntas disponibles para esta categoría y dificultad."
         );
 
         showScreen("difficultyScreen");
@@ -1056,17 +1276,15 @@ function restartGame() {
 
     }
 
-    // Mostrar nuevamente el juego
+
     showScreen("gameScreen");
 
-    // Actualizar datos
     updateScore();
+
     updateStreak();
 
-    // Volver a activar música
     startMusic();
 
-    // Mostrar la primera pregunta
     showQuestion();
 
 }
@@ -1082,6 +1300,7 @@ function openGameMenu() {
         document.getElementById(
             "gameMenu"
         );
+
 
     if (menu) {
 
@@ -1100,6 +1319,7 @@ function closeGameMenu() {
         document.getElementById(
             "gameMenu"
         );
+
 
     if (menu) {
 
@@ -1142,6 +1362,7 @@ function openHowToPlay() {
             "howToPlay"
         );
 
+
     if (modal) {
 
         modal.classList.remove(
@@ -1159,6 +1380,7 @@ function closeHowToPlay() {
         document.getElementById(
             "howToPlay"
         );
+
 
     if (modal) {
 
@@ -1390,6 +1612,7 @@ function showJoinRoom() {
         document.getElementById(
             "joinRoomBox"
         );
+
 
     if (box) {
 

@@ -14,6 +14,13 @@ let wrongAnswers = 0;
 let timeLeft = 15;
 let timer = null;
 
+// 🏆 RÉCORD PERSONAL
+let bestScore = Number(localStorage.getItem("bestScore")) || 0;
+
+// 🔥 RACHA
+let currentStreak = 0;
+let bestStreak = Number(localStorage.getItem("bestStreak")) || 0;
+
 let musicEnabled = true;
 let vibrationEnabled = true;
 
@@ -53,6 +60,7 @@ function showScreen(id) {
 // ==========================================
 
 function openPlayerScreen() {
+
     showScreen("playerScreen");
 
     const input = document.getElementById("playerName");
@@ -129,8 +137,11 @@ function startGame(amount) {
     prepareQuestions();
 
     if (gameQuestions.length === 0) {
+
         alert("No hay preguntas disponibles.");
+
         showScreen("categoryScreen");
+
         return;
     }
 
@@ -139,15 +150,21 @@ function startGame(amount) {
     correctAnswers = 0;
     wrongAnswers = 0;
 
+    // 🔥 Reiniciar racha de la partida
+    currentStreak = 0;
+
     showScreen("gameScreen");
 
-    const opponentBar = document.getElementById("opponentBar");
+    const opponentBar =
+        document.getElementById("opponentBar");
 
     if (opponentBar) {
         opponentBar.classList.add("hidden");
     }
 
     startMusic();
+
+    updateStreak();
 
     showQuestion();
 }
@@ -169,17 +186,16 @@ function prepareQuestions() {
         );
     }
 
-    // Mezclar
+    // Mezclar preguntas
     available.sort(() => Math.random() - 0.5);
 
-    // Si hay menos preguntas disponibles,
-    // usamos todas las disponibles.
     const amount = Math.min(
         selectedAmount,
         available.length
     );
 
-    gameQuestions = available.slice(0, amount);
+    gameQuestions =
+        available.slice(0, amount);
 }
 
 
@@ -192,18 +208,22 @@ function showQuestion() {
     clearInterval(timer);
 
     if (currentQuestion >= gameQuestions.length) {
+
         finishGame();
+
         return;
     }
 
     const question =
         gameQuestions[currentQuestion];
 
+
     // Número de pregunta
     const counter =
         document.getElementById("questionCounter");
 
     if (counter) {
+
         counter.textContent =
             `Pregunta ${currentQuestion + 1} de ${gameQuestions.length}`;
     }
@@ -229,6 +249,7 @@ function showQuestion() {
         document.getElementById("currentCategory");
 
     if (category) {
+
         category.textContent =
             getCategoryName(question.category).toUpperCase();
     }
@@ -239,6 +260,7 @@ function showQuestion() {
         document.getElementById("questionText");
 
     if (questionText) {
+
         questionText.textContent =
             question.question;
     }
@@ -251,9 +273,12 @@ function showQuestion() {
             document.getElementById(`answer${i}`);
 
         const button =
-            answer ? answer.closest(".answer") : null;
+            answer
+                ? answer.closest(".answer")
+                : null;
 
         if (answer) {
+
             answer.textContent =
                 question.answers[i];
         }
@@ -272,6 +297,7 @@ function showQuestion() {
 
 
     updateScore();
+    updateStreak();
 
     startTimer();
 }
@@ -354,6 +380,7 @@ function timeOut() {
     const buttons =
         document.querySelectorAll(".answer");
 
+
     buttons.forEach(button => {
 
         button.disabled = true;
@@ -361,15 +388,23 @@ function timeOut() {
         button.classList.add("disabled");
     });
 
+
     if (buttons[question.correct]) {
 
         buttons[question.correct]
             .classList.add("correct");
     }
 
+
     wrongAnswers++;
 
+    // ❌ Se rompe la racha
+    currentStreak = 0;
+
+    updateStreak();
+
     vibrate([100, 50, 100]);
+
 
     setTimeout(() => {
 
@@ -402,43 +437,95 @@ function selectAnswer(index) {
     const buttons =
         document.querySelectorAll(".answer");
 
+
     buttons.forEach(button => {
+
         button.disabled = true;
     });
 
+
+    // ======================================
+    // RESPUESTA CORRECTA
+    // ======================================
 
     if (index === question.correct) {
 
         correctAnswers++;
 
-        // Más puntos mientras más rápido respondas
-        score += 100 + (timeLeft * 5);
+        // 🔥 Aumentar racha
+        currentStreak++;
+
+        // 🏆 Guardar mejor racha
+        if (currentStreak > bestStreak) {
+
+            bestStreak =
+                currentStreak;
+
+            localStorage.setItem(
+                "bestStreak",
+                bestStreak
+            );
+        }
+
+
+        // 💰 Puntos por rapidez
+        score +=
+            100 + (timeLeft * 5);
+
+
+        // 🔥 Bonus por racha
+        if (currentStreak >= 3) {
+
+            score +=
+                currentStreak * 10;
+        }
+
 
         if (buttons[index]) {
+
             buttons[index]
                 .classList.add("correct");
         }
 
+
         vibrate([50]);
 
-    } else {
+    }
+
+
+    // ======================================
+    // RESPUESTA INCORRECTA
+    // ======================================
+
+    else {
 
         wrongAnswers++;
 
+        // ❌ Romper racha
+        currentStreak = 0;
+
+
         if (buttons[index]) {
+
             buttons[index]
                 .classList.add("wrong");
         }
 
+
         if (buttons[question.correct]) {
+
             buttons[question.correct]
                 .classList.add("correct");
         }
 
+
         vibrate([100, 50, 100]);
     }
 
+
     updateScore();
+    updateStreak();
+
 
     setTimeout(() => {
 
@@ -460,7 +547,26 @@ function updateScore() {
         document.getElementById("gameScore");
 
     if (scoreElement) {
-        scoreElement.textContent = score;
+
+        scoreElement.textContent =
+            score;
+    }
+}
+
+
+// ==========================================
+// 🔥 RACHA
+// ==========================================
+
+function updateStreak() {
+
+    const streakElement =
+        document.getElementById("currentStreak");
+
+    if (streakElement) {
+
+        streakElement.textContent =
+            currentStreak;
     }
 }
 
@@ -481,6 +587,7 @@ function finishGame() {
     const total =
         gameQuestions.length;
 
+
     const accuracy =
         total > 0
             ? Math.round(
@@ -488,6 +595,31 @@ function finishGame() {
             )
             : 0;
 
+
+    // ======================================
+    // 🏆 RÉCORD PERSONAL
+    // ======================================
+
+    let newRecord = false;
+
+
+    if (score > bestScore) {
+
+        bestScore =
+            score;
+
+        localStorage.setItem(
+            "bestScore",
+            bestScore
+        );
+
+        newRecord = true;
+    }
+
+
+    // ======================================
+    // ELEMENTOS
+    // ======================================
 
     const finalScore =
         document.getElementById("finalScore");
@@ -505,50 +637,112 @@ function finishGame() {
         document.getElementById("resultMessage");
 
 
+    // ======================================
+    // RESULTADOS
+    // ======================================
+
     if (finalScore) {
-        finalScore.textContent = score;
+
+        finalScore.textContent =
+            score;
     }
+
 
     if (correct) {
-        correct.textContent = correctAnswers;
+
+        correct.textContent =
+            correctAnswers;
     }
+
 
     if (wrong) {
-        wrong.textContent = wrongAnswers;
+
+        wrong.textContent =
+            wrongAnswers;
     }
 
+
     if (accuracyElement) {
+
         accuracyElement.textContent =
             `${accuracy}%`;
     }
 
 
+    // ======================================
+    // MENSAJE FINAL
+    // ======================================
+
     if (message) {
 
-        if (accuracy >= 90) {
+        if (newRecord) {
+
+            message.textContent =
+                "🏆 ¡NUEVO RÉCORD PERSONAL! 🔥";
+
+        }
+        else if (accuracy >= 90) {
+
             message.textContent =
                 "🔥 ¡Excelente! Eres una máquina.";
+
         }
         else if (accuracy >= 70) {
+
             message.textContent =
                 "👏 ¡Muy buen trabajo!";
+
         }
         else if (accuracy >= 50) {
+
             message.textContent =
                 "💪 ¡Vas por buen camino!";
+
         }
         else {
+
             message.textContent =
                 "🧠 ¡Sigue practicando!";
         }
     }
 
 
+    // ======================================
+    // MOSTRAR RÉCORD
+    // ======================================
+
+    const bestScoreElement =
+        document.getElementById("bestScore");
+
+    if (bestScoreElement) {
+
+        bestScoreElement.textContent =
+            bestScore;
+    }
+
+
+    // ======================================
+    // MOSTRAR MEJOR RACHA
+    // ======================================
+
+    const bestStreakElement =
+        document.getElementById("bestStreak");
+
+    if (bestStreakElement) {
+
+        bestStreakElement.textContent =
+            bestStreak;
+    }
+
+
+    // Barra de progreso
     const progress =
         document.getElementById("progressFill");
 
     if (progress) {
-        progress.style.width = "100%";
+
+        progress.style.width =
+            "100%";
     }
 }
 
@@ -577,6 +771,7 @@ function openGameMenu() {
         document.getElementById("gameMenu");
 
     if (menu) {
+
         menu.classList.remove("hidden");
     }
 }
@@ -588,6 +783,7 @@ function closeGameMenu() {
         document.getElementById("gameMenu");
 
     if (menu) {
+
         menu.classList.add("hidden");
     }
 }
@@ -619,6 +815,7 @@ function openHowToPlay() {
         document.getElementById("howToPlay");
 
     if (modal) {
+
         modal.classList.remove("hidden");
     }
 }
@@ -630,31 +827,32 @@ function closeHowToPlay() {
         document.getElementById("howToPlay");
 
     if (modal) {
+
         modal.classList.add("hidden");
     }
 }
 
 
 // ==========================================
-// MÚSICA
+// 🎵 MÚSICA
 // ==========================================
 
 function startMusic() {
 
     if (!musicEnabled || !music) {
+
         return;
     }
 
-    music.volume = 0.25;
+    music.volume =
+        0.25;
 
-    const promise = music.play();
+    const promise =
+        music.play();
 
     if (promise) {
 
-        promise.catch(() => {
-            // Algunos navegadores bloquean
-            // la reproducción automática.
-        });
+        promise.catch(() => {});
     }
 }
 
@@ -662,17 +860,21 @@ function startMusic() {
 function stopMusic() {
 
     if (!music) {
+
         return;
     }
 
     music.pause();
-    music.currentTime = 0;
+
+    music.currentTime =
+        0;
 }
 
 
 function toggleMusic() {
 
-    musicEnabled = !musicEnabled;
+    musicEnabled =
+        !musicEnabled;
 
     localStorage.setItem(
         "musicEnabled",
@@ -681,16 +883,20 @@ function toggleMusic() {
 
     updateSettings();
 
+
     if (musicEnabled) {
+
         startMusic();
+
     } else {
+
         stopMusic();
     }
 }
 
 
 // ==========================================
-// VIBRACIÓN
+// 📳 VIBRACIÓN
 // ==========================================
 
 function vibrate(pattern) {
@@ -699,6 +905,7 @@ function vibrate(pattern) {
         vibrationEnabled &&
         "vibrate" in navigator
     ) {
+
         navigator.vibrate(pattern);
     }
 }
@@ -716,34 +923,38 @@ function toggleVibration() {
 
     updateSettings();
 
+
     if (vibrationEnabled) {
+
         vibrate([50]);
     }
 }
 
 
 // ==========================================
-// CONFIGURACIÓN
+// ⚙️ CONFIGURACIÓN
 // ==========================================
 
 function loadSettings() {
 
-    const music =
+    const musicSetting =
         localStorage.getItem("musicEnabled");
 
-    const vibration =
+    const vibrationSetting =
         localStorage.getItem("vibrationEnabled");
 
 
-    if (music !== null) {
+    if (musicSetting !== null) {
+
         musicEnabled =
-            music === "true";
+            musicSetting === "true";
     }
 
 
-    if (vibration !== null) {
+    if (vibrationSetting !== null) {
+
         vibrationEnabled =
-            vibration === "true";
+            vibrationSetting === "true";
     }
 
 
@@ -763,20 +974,24 @@ function updateSettings() {
     if (musicStatus) {
 
         musicStatus.textContent =
-            musicEnabled ? "ON" : "OFF";
+            musicEnabled
+                ? "ON"
+                : "OFF";
     }
 
 
     if (vibrationStatus) {
 
         vibrationStatus.textContent =
-            vibrationEnabled ? "ON" : "OFF";
+            vibrationEnabled
+                ? "ON"
+                : "OFF";
     }
 }
 
 
 // ==========================================
-// MULTIJUGADOR - INTERFAZ
+// 👥 MULTIJUGADOR
 // ==========================================
 
 function openMultiplayerScreen() {
@@ -798,6 +1013,7 @@ function showJoinRoom() {
             document.getElementById("roomCode");
 
         if (input) {
+
             input.focus();
         }
     }
@@ -815,10 +1031,12 @@ function createRoom() {
 
     isHost = true;
 
+
     const display =
         document.getElementById("displayRoomCode");
 
     if (display) {
+
         display.textContent =
             roomCode;
     }
@@ -828,8 +1046,10 @@ function createRoom() {
         document.getElementById("hostName");
 
     if (host) {
+
         host.textContent =
-            playerName || "Jugador 1";
+            playerName ||
+            "Jugador 1";
     }
 
 
@@ -846,10 +1066,16 @@ function joinRoom() {
     const input =
         document.getElementById("roomCode");
 
-    if (!input) return;
+    if (!input) {
+
+        return;
+    }
+
 
     const code =
-        input.value.trim().toUpperCase();
+        input.value
+            .trim()
+            .toUpperCase();
 
 
     if (code.length !== 6) {
@@ -862,15 +1088,18 @@ function joinRoom() {
     }
 
 
-    roomCode = code;
+    roomCode =
+        code;
 
-    isHost = false;
+    isHost =
+        false;
 
 
     const display =
         document.getElementById("displayRoomCode");
 
     if (display) {
+
         display.textContent =
             roomCode;
     }
@@ -880,12 +1109,15 @@ function joinRoom() {
         document.getElementById("guestName");
 
     if (guest) {
+
         guest.textContent =
-            playerName || "Jugador 2";
+            playerName ||
+            "Jugador 2";
     }
 
 
     showScreen("roomScreen");
+
 
     alert(
         "Sala encontrada. El multijugador real se conectará con Firebase en el siguiente paso."
@@ -904,6 +1136,7 @@ function generateRoomCode() {
 
     let code = "";
 
+
     for (let i = 0; i < 6; i++) {
 
         code +=
@@ -915,6 +1148,7 @@ function generateRoomCode() {
             );
     }
 
+
     return code;
 }
 
@@ -925,7 +1159,11 @@ function generateRoomCode() {
 
 function copyRoomCode() {
 
-    if (!roomCode) return;
+    if (!roomCode) {
+
+        return;
+    }
+
 
     navigator.clipboard
         .writeText(roomCode)
@@ -939,7 +1177,8 @@ function copyRoomCode() {
         .catch(() => {
 
             alert(
-                "Código: " + roomCode
+                "Código: " +
+                roomCode
             );
         });
 }
@@ -960,7 +1199,7 @@ function leaveRoom() {
 
 
 // ==========================================
-// TECLADO A B C D
+// ⌨️ TECLADO A B C D
 // ==========================================
 
 document.addEventListener(
@@ -974,17 +1213,23 @@ document.addEventListener(
         ) {
 
             const keys = {
+
                 a: 0,
                 b: 1,
                 c: 2,
                 d: 3
             };
 
+
             const key =
                 event.key.toLowerCase();
 
+
             if (key in keys) {
-                selectAnswer(keys[key]);
+
+                selectAnswer(
+                    keys[key]
+                );
             }
         }
     }
@@ -992,7 +1237,7 @@ document.addEventListener(
 
 
 // ==========================================
-// INICIAR
+// 🚀 INICIAR
 // ==========================================
 
 document.addEventListener(
@@ -1001,10 +1246,23 @@ document.addEventListener(
 
         loadSettings();
 
-        showScreen("homeScreen");
+        showScreen(
+            "homeScreen"
+        );
+
 
         console.log(
             "🧠 Desafío Mental cargado correctamente."
+        );
+
+        console.log(
+            "🏆 Récord personal:",
+            bestScore
+        );
+
+        console.log(
+            "🔥 Mejor racha:",
+            bestStreak
         );
     }
 );

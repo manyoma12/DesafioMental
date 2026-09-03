@@ -2284,6 +2284,7 @@ const questions = [
         question: "¿Cuál es la capital de Francia?",
         answers: ["Roma", "Madrid", "París", "Berlín"],
         correct: 2
-    } ];
+    },
+];
 
 window.questionBank = questions;

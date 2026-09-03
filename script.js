@@ -243,6 +243,8 @@ function selectDifficulty(difficulty) {
 
 function startGame(amount) {
 
+    clearInterval(timer);
+
     selectedAmount =
         Number(amount);
 
@@ -279,9 +281,13 @@ function startGame(amount) {
 
     }
 
-    startMusic();
+    showScreen("gameScreen");
+
+    updateScore();
 
     updateStreak();
+
+    startMusic();
 
     showQuestion();
 
@@ -1012,18 +1018,56 @@ function finishGame() {
 
 
 // ==========================================
-// REINICIAR
+// JUGAR OTRA VEZ
 // ==========================================
 
 function restartGame() {
 
-    closeGameMenu();
-
+    // Detener cualquier temporizador anterior
     clearInterval(timer);
 
-    startGame(
-        selectedAmount
-    );
+    // Cerrar menú por si estaba abierto
+    closeGameMenu();
+
+    // Reiniciar completamente la partida
+    currentQuestion = 0;
+    score = 0;
+    correctAnswers = 0;
+    wrongAnswers = 0;
+    currentStreak = 0;
+    timeLeft =
+        difficultySettings[selectedDifficulty]
+            ? difficultySettings[selectedDifficulty].time
+            : 50;
+
+    // Volver a preparar las preguntas
+    prepareQuestions();
+
+    // Comprobar que existan preguntas
+    if (gameQuestions.length === 0) {
+
+        alert(
+            "No hay preguntas disponibles para esta dificultad."
+        );
+
+        showScreen("difficultyScreen");
+
+        return;
+
+    }
+
+    // Mostrar nuevamente el juego
+    showScreen("gameScreen");
+
+    // Actualizar datos
+    updateScore();
+    updateStreak();
+
+    // Volver a activar música
+    startMusic();
+
+    // Mostrar la primera pregunta
+    showQuestion();
 
 }
 

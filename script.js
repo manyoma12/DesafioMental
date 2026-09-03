@@ -298,7 +298,7 @@ function startGame(amount) {
 // PREPARAR PREGUNTAS
 // ==========================================
 
-function prepareQuestions() {
+function prepareQuestions(previousFirstQuestion = null) {
 
     // Comprobar que exista el banco
     if (
@@ -366,6 +366,30 @@ function prepareQuestions() {
 
 
     // ======================================
+    // EVITAR PRIMERA PREGUNTA REPETIDA
+    // ======================================
+
+    if (
+        previousFirstQuestion &&
+        available.length > 1
+    ) {
+
+        const differentQuestions =
+            available.filter(question =>
+                question.question !== previousFirstQuestion
+            );
+
+        if (differentQuestions.length > 0) {
+
+            available =
+                differentQuestions;
+
+        }
+
+    }
+
+
+    // ======================================
     // MEZCLAR PREGUNTAS
     // ======================================
 
@@ -380,11 +404,9 @@ function prepareQuestions() {
 
 
     /*
-        IMPORTANTE:
-
         Si hay menos preguntas disponibles
         que las seleccionadas, reutilizamos
-        las preguntas para completar la partida.
+        preguntas para completar la partida.
 
         Ejemplo:
 
@@ -398,7 +420,6 @@ function prepareQuestions() {
         pero el orden será aleatorio.
     */
 
-
     for (
         let i = 0;
         i < selectedAmount;
@@ -411,8 +432,6 @@ function prepareQuestions() {
             ];
 
 
-        // Crear copia para evitar modificar
-        // accidentalmente la pregunta original
         const newQuestion = {
 
             category:
@@ -448,6 +467,37 @@ function prepareQuestions() {
 
 
     // ======================================
+    // ASEGURAR PRIMERA PREGUNTA DIFERENTE
+    // ======================================
+
+    if (
+        previousFirstQuestion &&
+        gameQuestions.length > 1 &&
+        gameQuestions[0].question === previousFirstQuestion
+    ) {
+
+        const differentIndex =
+            gameQuestions.findIndex(question =>
+                question.question !== previousFirstQuestion
+            );
+
+        if (differentIndex !== -1) {
+
+            [
+                gameQuestions[0],
+                gameQuestions[differentIndex]
+            ] =
+            [
+                gameQuestions[differentIndex],
+                gameQuestions[0]
+            ];
+
+        }
+
+    }
+
+
+    // ======================================
     // SEGURIDAD
     // ======================================
 
@@ -477,6 +527,11 @@ function prepareQuestions() {
             "✅ Partida preparada:",
             gameQuestions.length,
             "preguntas"
+        );
+
+        console.log(
+            "🆕 Primera pregunta:",
+            gameQuestions[0]?.question
         );
 
     }
@@ -1244,6 +1299,20 @@ function restartGame() {
     closeGameMenu();
 
 
+    // ======================================
+    // GUARDAR LA PRIMERA PREGUNTA ANTERIOR
+    // ======================================
+
+    const previousFirstQuestion =
+        gameQuestions.length > 0
+            ? gameQuestions[0].question
+            : null;
+
+
+    // ======================================
+    // REINICIAR ESTADÍSTICAS
+    // ======================================
+
     currentQuestion = 0;
 
     score = 0;
@@ -1261,7 +1330,13 @@ function restartGame() {
             : 50;
 
 
-    prepareQuestions();
+    // ======================================
+    // PREPARAR NUEVA PARTIDA
+    // ======================================
+
+    prepareQuestions(
+        previousFirstQuestion
+    );
 
 
     if (gameQuestions.length === 0) {

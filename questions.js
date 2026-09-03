@@ -1,463 +1,562 @@
 const questions = [
 
-  // =========================
-  // CULTURA GENERAL
-  // =========================
+    // =========================
+    // 🧠 CULTURA GENERAL
+    // =========================
 
-  {
-    category: "general",
-    question: "¿Cuál es la capital de Francia?",
-    answers: ["Madrid", "París", "Roma", "Lisboa"],
-    correct: 1
-  },
-  {
-    category: "general",
-    question: "¿Cuántos lados tiene un hexágono?",
-    answers: ["5", "6", "7", "8"],
-    correct: 1
-  },
-  {
-    category: "general",
-    question: "¿Cuál es el planeta más grande del sistema solar?",
-    answers: ["Marte", "Saturno", "Júpiter", "Neptuno"],
-    correct: 2
-  },
-  {
-    category: "general",
-    question: "¿Cuántos días tiene un año normal?",
-    answers: ["360", "365", "366", "370"],
-    correct: 1
-  },
-  {
-    category: "general",
-    question: "¿Cuál es el océano más grande del mundo?",
-    answers: ["Atlántico", "Índico", "Pacífico", "Ártico"],
-    correct: 2
-  },
-  {
-    category: "general",
-    question: "¿Cuántos continentes se consideran habitualmente?",
-    answers: ["5", "6", "7", "8"],
-    correct: 2
-  },
-  {
-    category: "general",
-    question: "¿Cuál es el idioma más hablado del mundo por número de hablantes nativos?",
-    answers: ["Inglés", "Español", "Chino mandarín", "Francés"],
-    correct: 2
-  },
-  {
-    category: "general",
-    question: "¿Qué instrumento tiene teclas, cuerdas y martillos?",
-    answers: ["Guitarra", "Piano", "Violín", "Flauta"],
-    correct: 1
-  },
-  {
-    category: "general",
-    question: "¿Cuántos minutos tiene una hora?",
-    answers: ["30", "45", "60", "90"],
-    correct: 2
-  },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el planeta más grande del sistema solar?",
+        answers: ["Júpiter", "Marte", "Venus", "Mercurio"],
+        correct: 0
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuántos días tiene una semana?",
+        answers: ["5", "6", "7", "8"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "easy",
+        question: "¿Cuál es el océano más grande del mundo?",
+        answers: ["Atlántico", "Índico", "Pacífico", "Ártico"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "medium",
+        question: "¿Cuál es el idioma más hablado del mundo por número de hablantes nativos?",
+        answers: ["Inglés", "Español", "Chino mandarín", "Francés"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "medium",
+        question: "¿Quién pintó la Mona Lisa?",
+        answers: ["Van Gogh", "Leonardo da Vinci", "Picasso", "Miguel Ángel"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "medium",
+        question: "¿Cuál es el metal cuyo símbolo químico es Au?",
+        answers: ["Plata", "Hierro", "Oro", "Cobre"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "hard",
+        question: "¿Cuál es la capital de Kazajistán?",
+        answers: ["Taskent", "Astaná", "Biskek", "Dusambé"],
+        correct: 1
+    },
+    {
+        category: "general",
+        difficulty: "hard",
+        question: "¿Qué filósofo escribió 'La República'?",
+        answers: ["Aristóteles", "Sócrates", "Platón", "Descartes"],
+        correct: 2
+    },
+    {
+        category: "general",
+        difficulty: "god",
+        question: "¿Qué elemento químico tiene el número atómico 74?",
+        answers: ["Tungsteno", "Renio", "Osmio", "Tantalio"],
+        correct: 0
+    },
 
-  // =========================
-  // COLOMBIA
-  // =========================
+    // =========================
+    // 🇨🇴 COLOMBIA
+    // =========================
 
-  {
-    category: "colombia",
-    question: "¿Cuál es la capital de Colombia?",
-    answers: ["Medellín", "Bogotá", "Cali", "Barranquilla"],
-    correct: 1
-  },
-  {
-    category: "colombia",
-    question: "¿Cuál es la moneda oficial de Colombia?",
-    answers: ["Dólar", "Peso colombiano", "Euro", "Sol"],
-    correct: 1
-  },
-  {
-    category: "colombia",
-    question: "¿Cuál es el río más importante de Colombia por su longitud y extensión?",
-    answers: ["Río Cauca", "Río Magdalena", "Río Atrato", "Río Meta"],
-    correct: 1
-  },
-  {
-    category: "colombia",
-    question: "¿En qué ciudad se encuentra la Torre Colpatria?",
-    answers: ["Cali", "Cartagena", "Bogotá", "Manizales"],
-    correct: 2
-  },
-  {
-    category: "colombia",
-    question: "¿Cuál es la ciudad conocida como la 'Ciudad de la Eterna Primavera'?",
-    answers: ["Cali", "Medellín", "Pereira", "Ibagué"],
-    correct: 1
-  },
-  {
-    category: "colombia",
-    question: "¿Cuál es la flor nacional de Colombia?",
-    answers: ["Rosa", "Girasol", "Orquídea", "Tulipán"],
-    correct: 2
-  },
-  {
-    category: "colombia",
-    question: "¿Cuál es el ave nacional de Colombia?",
-    answers: ["Cóndor de los Andes", "Águila", "Guacamaya", "Colibrí"],
-    correct: 0
-  },
-  {
-    category: "colombia",
-    question: "¿En qué ciudad se celebra una de las ferias más importantes del país dedicada a las flores?",
-    answers: ["Medellín", "Cali", "Santa Marta", "Cúcuta"],
-    correct: 0
-  },
-  {
-    category: "colombia",
-    question: "¿Qué mar baña la costa norte de Colombia?",
-    answers: ["Mar Mediterráneo", "Mar Caribe", "Mar Rojo", "Mar Negro"],
-    correct: 1
-  },
+    {
+        category: "colombia",
+        difficulty: "easy",
+        question: "¿Cuál es la capital de Colombia?",
+        answers: ["Cali", "Bogotá", "Medellín", "Cartagena"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "easy",
+        question: "¿Cuál es el río más importante de Colombia?",
+        answers: ["Amazonas", "Magdalena", "Cauca", "Orinoco"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "easy",
+        question: "¿En qué ciudad se encuentra la Torre del Reloj?",
+        answers: ["Cartagena", "Cali", "Pereira", "Manizales"],
+        correct: 0
+    },
+    {
+        category: "colombia",
+        difficulty: "medium",
+        question: "¿En qué año se declaró la independencia de Colombia?",
+        answers: ["1810", "1819", "1821", "1830"],
+        correct: 0
+    },
+    {
+        category: "colombia",
+        difficulty: "medium",
+        question: "¿Quién fue conocido como 'El Libertador'?",
+        answers: ["Francisco de Paula Santander", "Simón Bolívar", "Antonio Nariño", "José María Córdova"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "medium",
+        question: "¿Cuál es el departamento cuya capital es Cali?",
+        answers: ["Cauca", "Valle del Cauca", "Nariño", "Risaralda"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "hard",
+        question: "¿En qué batalla fue derrotado el ejército español que permitió consolidar la independencia de Nueva Granada?",
+        answers: ["Batalla de Boyacá", "Batalla de Carabobo", "Batalla de Pichincha", "Batalla de Ayacucho"],
+        correct: 0
+    },
+    {
+        category: "colombia",
+        difficulty: "hard",
+        question: "¿Quién escribió 'El olvido que seremos'?",
+        answers: ["Gabriel García Márquez", "Héctor Abad Faciolince", "Álvaro Mutis", "Jorge Isaacs"],
+        correct: 1
+    },
+    {
+        category: "colombia",
+        difficulty: "god",
+        question: "¿Cuál fue el nombre original de Bogotá durante el periodo colonial?",
+        answers: ["Santa Fe de Bogotá", "Nueva Granada", "Santa Marta", "Villa de Leyva"],
+        correct: 0
+    },
 
-  // =========================
-  // CIENCIA
-  // =========================
+    // =========================
+    // 🔬 CIENCIA
+    // =========================
 
-  {
-    category: "science",
-    question: "¿Cuál es el planeta más cercano al Sol?",
-    answers: ["Venus", "Mercurio", "Marte", "Tierra"],
-    correct: 1
-  },
-  {
-    category: "science",
-    question: "¿Qué gas necesitan los seres humanos para respirar?",
-    answers: ["Oxígeno", "Helio", "Hidrógeno", "Neón"],
-    correct: 0
-  },
-  {
-    category: "science",
-    question: "¿Cuál es la unidad básica de los seres vivos?",
-    answers: ["Átomo", "Molécula", "Célula", "Tejido"],
-    correct: 2
-  },
-  {
-    category: "science",
-    question: "¿Qué órgano bombea la sangre por el cuerpo?",
-    answers: ["Pulmón", "Cerebro", "Corazón", "Hígado"],
-    correct: 2
-  },
-  {
-    category: "science",
-    question: "¿Cuántos huesos tiene aproximadamente un adulto?",
-    answers: ["106", "206", "306", "406"],
-    correct: 1
-  },
-  {
-    category: "science",
-    question: "¿Qué fuerza nos mantiene sobre la superficie de la Tierra?",
-    answers: ["Electricidad", "Gravedad", "Fricción", "Magnetismo"],
-    correct: 1
-  },
-  {
-    category: "science",
-    question: "¿Cuál es el símbolo químico del oro?",
-    answers: ["Ag", "Fe", "Au", "O"],
-    correct: 2
-  },
-  {
-    category: "science",
-    question: "¿Qué parte de la planta realiza principalmente la fotosíntesis?",
-    answers: ["Raíz", "Tallo", "Hoja", "Semilla"],
-    correct: 2
-  },
-  {
-    category: "science",
-    question: "¿A qué temperatura hierve el agua aproximadamente al nivel del mar?",
-    answers: ["50 °C", "75 °C", "100 °C", "150 °C"],
-    correct: 2
-  },
+    {
+        category: "science",
+        difficulty: "easy",
+        question: "¿Cuál es el planeta conocido como el planeta rojo?",
+        answers: ["Venus", "Marte", "Saturno", "Neptuno"],
+        correct: 1
+    },
+    {
+        category: "science",
+        difficulty: "easy",
+        question: "¿Qué órgano bombea la sangre por el cuerpo?",
+        answers: ["Pulmón", "Cerebro", "Corazón", "Hígado"],
+        correct: 2
+    },
+    {
+        category: "science",
+        difficulty: "easy",
+        question: "¿Qué gas necesitan los seres humanos para respirar?",
+        answers: ["Oxígeno", "Helio", "Hidrógeno", "Nitrógeno"],
+        correct: 0
+    },
+    {
+        category: "science",
+        difficulty: "medium",
+        question: "¿Cuál es la unidad básica de la vida?",
+        answers: ["Átomo", "Célula", "Molécula", "Tejido"],
+        correct: 1
+    },
+    {
+        category: "science",
+        difficulty: "medium",
+        question: "¿Qué fuerza mantiene a los planetas en órbita alrededor del Sol?",
+        answers: ["Magnetismo", "Fricción", "Gravedad", "Electricidad"],
+        correct: 2
+    },
+    {
+        category: "science",
+        difficulty: "medium",
+        question: "¿Cuál es la fórmula química del agua?",
+        answers: ["CO2", "H2O", "O2", "NaCl"],
+        correct: 1
+    },
+    {
+        category: "science",
+        difficulty: "hard",
+        question: "¿Cuál es la velocidad aproximada de la luz en el vacío?",
+        answers: ["300.000 km/s", "150.000 km/s", "30.000 km/s", "3.000 km/s"],
+        correct: 0
+    },
+    {
+        category: "science",
+        difficulty: "hard",
+        question: "¿Qué partícula subatómica posee carga negativa?",
+        answers: ["Protón", "Neutrón", "Electrón", "Fotón"],
+        correct: 2
+    },
+    {
+        category: "science",
+        difficulty: "god",
+        question: "¿Qué principio establece que no se pueden conocer simultáneamente con precisión arbitraria la posición y el momento de una partícula?",
+        answers: ["Principio de exclusión", "Principio de incertidumbre", "Principio de relatividad", "Principio de superposición"],
+        correct: 1
+    },
 
-  // =========================
-  // HISTORIA
-  // =========================
+    // =========================
+    // 📜 HISTORIA
+    // =========================
 
-  {
-    category: "history",
-    question: "¿En qué año llegó Cristóbal Colón a América?",
-    answers: ["1492", "1500", "1520", "1450"],
-    correct: 0
-  },
-  {
-    category: "history",
-    question: "¿Quién fue conocido como el Libertador?",
-    answers: ["Simón Bolívar", "Napoleón Bonaparte", "Julio César", "Miguel Hidalgo"],
-    correct: 0
-  },
-  {
-    category: "history",
-    question: "¿En qué año se produjo la Revolución Francesa?",
-    answers: ["1689", "1776", "1789", "1810"],
-    correct: 2
-  },
-  {
-    category: "history",
-    question: "¿Qué civilización construyó Machu Picchu?",
-    answers: ["Maya", "Azteca", "Inca", "Egipcia"],
-    correct: 2
-  },
-  {
-    category: "history",
-    question: "¿Qué batalla fue decisiva para la independencia de Colombia?",
-    answers: ["Batalla de Boyacá", "Batalla de Waterloo", "Batalla de Trafalgar", "Batalla de Maratón"],
-    correct: 0
-  },
-  {
-    category: "history",
-    question: "¿En qué año ocurrió la Batalla de Boyacá?",
-    answers: ["1810", "1819", "1825", "1830"],
-    correct: 1
-  },
-  {
-    category: "history",
-    question: "¿Qué famoso barco se hundió en 1912?",
-    answers: ["Titanic", "Mayflower", "Santa María", "Victoria"],
-    correct: 0
-  },
-  {
-    category: "history",
-    question: "¿Quién fue el primer hombre en pisar la Luna?",
-    answers: ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "Michael Collins"],
-    correct: 1
-  },
-  {
-    category: "history",
-    question: "¿Qué antiguo pueblo construyó las pirámides de Guiza?",
-    answers: ["Romanos", "Griegos", "Egipcios", "Persas"],
-    correct: 2
-  },
+    {
+        category: "history",
+        difficulty: "easy",
+        question: "¿En qué año llegó Cristóbal Colón a América?",
+        answers: ["1492", "1500", "1453", "1519"],
+        correct: 0
+    },
+    {
+        category: "history",
+        difficulty: "easy",
+        question: "¿Quién fue el primer emperador romano?",
+        answers: ["Julio César", "Nerón", "Augusto", "Trajano"],
+        correct: 2
+    },
+    {
+        category: "history",
+        difficulty: "easy",
+        question: "¿Dónde se construyeron las pirámides de Guiza?",
+        answers: ["México", "Egipto", "Grecia", "Italia"],
+        correct: 1
+    },
+    {
+        category: "history",
+        difficulty: "medium",
+        question: "¿En qué año comenzó la Segunda Guerra Mundial?",
+        answers: ["1935", "1939", "1941", "1945"],
+        correct: 1
+    },
+    {
+        category: "history",
+        difficulty: "medium",
+        question: "¿Qué muro cayó en 1989?",
+        answers: ["Muro de Roma", "Muro de Berlín", "Muro de París", "Muro de Londres"],
+        correct: 1
+    },
+    {
+        category: "history",
+        difficulty: "medium",
+        question: "¿Quién fue conocido como el Rey Sol?",
+        answers: ["Luis XIV", "Carlos V", "Napoleón", "Luis XVI"],
+        correct: 0
+    },
+    {
+        category: "history",
+        difficulty: "hard",
+        question: "¿Qué tratado puso fin oficialmente a la Primera Guerra Mundial con Alemania?",
+        answers: ["Tratado de París", "Tratado de Versalles", "Tratado de Roma", "Tratado de Viena"],
+        correct: 1
+    },
+    {
+        category: "history",
+        difficulty: "hard",
+        question: "¿Qué civilización desarrolló la escritura cuneiforme?",
+        answers: ["Egipcia", "Romana", "Sumeria", "Maya"],
+        correct: 2
+    },
+    {
+        category: "history",
+        difficulty: "god",
+        question: "¿Qué emperador bizantino ordenó recopilar el Corpus Juris Civilis?",
+        answers: ["Constantino", "Justiniano I", "Teodosio", "Basilio II"],
+        correct: 1
+    },
 
-  // =========================
-  // DEPORTES
-  // =========================
+    // =========================
+    // ⚽ DEPORTES
+    // =========================
 
-  {
-    category: "sports",
-    question: "¿Cuántos jugadores tiene un equipo de fútbol en el campo?",
-    answers: ["9", "10", "11", "12"],
-    correct: 2
-  },
-  {
-    category: "sports",
-    question: "¿Cuánto dura normalmente un partido de fútbol profesional?",
-    answers: ["60 minutos", "75 minutos", "90 minutos", "120 minutos"],
-    correct: 2
-  },
-  {
-    category: "sports",
-    question: "¿Qué deporte utiliza una raqueta y una pelota amarilla?",
-    answers: ["Béisbol", "Tenis", "Baloncesto", "Golf"],
-    correct: 1
-  },
-  {
-    category: "sports",
-    question: "¿Cuántos anillos tiene el símbolo olímpico?",
-    answers: ["4", "5", "6", "7"],
-    correct: 1
-  },
-  {
-    category: "sports",
-    question: "¿En qué deporte se utiliza un aro y un balón naranja?",
-    answers: ["Fútbol", "Baloncesto", "Voleibol", "Rugby"],
-    correct: 1
-  },
-  {
-    category: "sports",
-    question: "¿Qué país ganó el Mundial de fútbol de 2022?",
-    answers: ["Francia", "Brasil", "Argentina", "España"],
-    correct: 2
-  },
-  {
-    category: "sports",
-    question: "¿Qué deporte practica un piloto en una pista con monoplazas?",
-    answers: ["Fórmula 1", "Boxeo", "Ciclismo", "Natación"],
-    correct: 0
-  },
-  {
-    category: "sports",
-    question: "¿En qué deporte se consigue un 'home run'?",
-    answers: ["Béisbol", "Tenis", "Golf", "Hockey"],
-    correct: 0
-  },
+    {
+        category: "sports",
+        difficulty: "easy",
+        question: "¿Cuántos jugadores tiene un equipo de fútbol en el campo?",
+        answers: ["9", "10", "11", "12"],
+        correct: 2
+    },
+    {
+        category: "sports",
+        difficulty: "easy",
+        question: "¿Cuántos puntos vale un triple en baloncesto?",
+        answers: ["1", "2", "3", "4"],
+        correct: 2
+    },
+    {
+        category: "sports",
+        difficulty: "medium",
+        question: "¿Cuánto dura normalmente un partido de fútbol?",
+        answers: ["60 minutos", "80 minutos", "90 minutos", "120 minutos"],
+        correct: 2
+    },
+    {
+        category: "sports",
+        difficulty: "medium",
+        question: "¿En qué deporte se utiliza un 'birdie'?",
+        answers: ["Tenis", "Golf", "Boxeo", "Natación"],
+        correct: 1
+    },
+    {
+        category: "sports",
+        difficulty: "medium",
+        question: "¿Cuántos anillos tiene el símbolo olímpico?",
+        answers: ["4", "5", "6", "7"],
+        correct: 1
+    },
+    {
+        category: "sports",
+        difficulty: "hard",
+        question: "¿Qué país ganó el Mundial de fútbol de 2014?",
+        answers: ["Argentina", "Alemania", "Brasil", "España"],
+        correct: 1
+    },
+    {
+        category: "sports",
+        difficulty: "hard",
+        question: "¿En qué deporte destacó Michael Phelps?",
+        answers: ["Atletismo", "Natación", "Ciclismo", "Remo"],
+        correct: 1
+    },
+    {
+        category: "sports",
+        difficulty: "god",
+        question: "¿Qué atleta posee el récord mundial masculino de los 100 metros lisos?",
+        answers: ["Tyson Gay", "Yohan Blake", "Usain Bolt", "Asafa Powell"],
+        correct: 2
+    },
 
-  // =========================
-  // TECNOLOGÍA
-  // =========================
+    // =========================
+    // 💻 TECNOLOGÍA
+    // =========================
 
-  {
-    category: "technology",
-    question: "¿Qué significa HTML?",
-    answers: [
-      "HyperText Markup Language",
-      "High Technology Modern Language",
-      "Home Tool Markup Language",
-      "Hyperlink Text Machine Language"
-    ],
-    correct: 0
-  },
-  {
-    category: "technology",
-    question: "¿Qué dispositivo se utiliza principalmente para mover el cursor en un ordenador?",
-    answers: ["Monitor", "Ratón", "Impresora", "Altavoz"],
-    correct: 1
-  },
-  {
-    category: "technology",
-    question: "¿Qué empresa desarrolla Android?",
-    answers: ["Apple", "Google", "Microsoft", "Sony"],
-    correct: 1
-  },
-  {
-    category: "technology",
-    question: "¿Qué significa Wi-Fi?",
-    answers: [
-      "Una tecnología de conexión inalámbrica",
-      "Un tipo de batería",
-      "Un sistema operativo",
-      "Un lenguaje de programación"
-    ],
-    correct: 0
-  },
-  {
-    category: "technology",
-    question: "¿Cuál de estos es un sistema operativo?",
-    answers: ["Windows", "Chrome", "Google", "YouTube"],
-    correct: 0
-  },
-  {
-    category: "technology",
-    question: "¿Qué componente se considera el 'cerebro' del ordenador?",
-    answers: ["CPU", "Monitor", "Teclado", "Disco"],
-    correct: 0
-  },
-  {
-    category: "technology",
-    question: "¿Qué lenguaje se utiliza principalmente para dar estilo a una página web?",
-    answers: ["HTML", "CSS", "SQL", "Python"],
-    correct: 1
-  },
-  {
-    category: "technology",
-    question: "¿Qué lenguaje se utiliza para añadir interactividad a muchas páginas web?",
-    answers: ["JavaScript", "HTML", "CSS", "XML"],
-    correct: 0
-  },
+    {
+        category: "technology",
+        difficulty: "easy",
+        question: "¿Qué significa HTML?",
+        answers: [
+            "HyperText Markup Language",
+            "High Technology Machine Language",
+            "Hyperlink Text Machine Language",
+            "Home Tool Markup Language"
+        ],
+        correct: 0
+    },
+    {
+        category: "technology",
+        difficulty: "easy",
+        question: "¿Qué dispositivo utilizamos normalmente para mover el cursor?",
+        answers: ["Router", "Ratón", "Monitor", "Impresora"],
+        correct: 1
+    },
+    {
+        category: "technology",
+        difficulty: "medium",
+        question: "¿Qué lenguaje se utiliza principalmente para dar interactividad a una página web?",
+        answers: ["JavaScript", "HTML", "SQL", "XML"],
+        correct: 0
+    },
+    {
+        category: "technology",
+        difficulty: "medium",
+        question: "¿Qué significa CPU?",
+        answers: [
+            "Central Processing Unit",
+            "Computer Personal Unit",
+            "Central Program Utility",
+            "Computer Processing User"
+        ],
+        correct: 0
+    },
+    {
+        category: "technology",
+        difficulty: "medium",
+        question: "¿Qué empresa desarrolla Android?",
+        answers: ["Apple", "Google", "Microsoft", "Sony"],
+        correct: 1
+    },
+    {
+        category: "technology",
+        difficulty: "hard",
+        question: "¿Qué protocolo se utiliza para transferir páginas web de forma segura?",
+        answers: ["HTTP", "FTP", "HTTPS", "SMTP"],
+        correct: 2
+    },
+    {
+        category: "technology",
+        difficulty: "hard",
+        question: "¿Qué estructura de datos funciona bajo el principio LIFO?",
+        answers: ["Cola", "Pila", "Árbol", "Grafo"],
+        correct: 1
+    },
+    {
+        category: "technology",
+        difficulty: "god",
+        question: "¿Qué algoritmo de cifrado es un estándar ampliamente utilizado para cifrado simétrico?",
+        answers: ["AES", "RSA", "SHA-256", "DSA"],
+        correct: 0
+    },
 
-  // =========================
-  // GEOGRAFÍA
-  // =========================
+    // =========================
+    // 🌎 GEOGRAFÍA
+    // =========================
 
-  {
-    category: "geography",
-    question: "¿Cuál es el país más grande del mundo por superficie?",
-    answers: ["China", "Canadá", "Rusia", "Estados Unidos"],
-    correct: 2
-  },
-  {
-    category: "geography",
-    question: "¿Cuál es la capital de España?",
-    answers: ["Barcelona", "Sevilla", "Madrid", "Valencia"],
-    correct: 2
-  },
-  {
-    category: "geography",
-    question: "¿En qué continente está Egipto?",
-    answers: ["Asia", "Europa", "África", "Oceanía"],
-    correct: 2
-  },
-  {
-    category: "geography",
-    question: "¿Cuál es el río más largo de Sudamérica?",
-    answers: ["Amazonas", "Nilo", "Danubio", "Mississippi"],
-    correct: 0
-  },
-  {
-    category: "geography",
-    question: "¿Cuál es la capital de Japón?",
-    answers: ["Kioto", "Osaka", "Tokio", "Hiroshima"],
-    correct: 2
-  },
-  {
-    category: "geography",
-    question: "¿Qué país tiene forma aproximada de bota?",
-    answers: ["Italia", "Grecia", "Portugal", "Chile"],
-    correct: 0
-  },
-  {
-    category: "geography",
-    question: "¿Cuál es el continente más grande?",
-    answers: ["África", "Europa", "Asia", "América"],
-    correct: 2
-  },
-  {
-    category: "geography",
-    question: "¿Cuál es la capital de Argentina?",
-    answers: ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"],
-    correct: 0
-  },
+    {
+        category: "geography",
+        difficulty: "easy",
+        question: "¿Cuál es el continente más grande?",
+        answers: ["África", "Europa", "Asia", "América"],
+        correct: 2
+    },
+    {
+        category: "geography",
+        difficulty: "easy",
+        question: "¿Cuál es el país más grande del mundo por superficie?",
+        answers: ["China", "Estados Unidos", "Canadá", "Rusia"],
+        correct: 3
+    },
+    {
+        category: "geography",
+        difficulty: "medium",
+        question: "¿Cuál es la capital de Australia?",
+        answers: ["Sídney", "Melbourne", "Canberra", "Perth"],
+        correct: 2
+    },
+    {
+        category: "geography",
+        difficulty: "medium",
+        question: "¿Qué río atraviesa Egipto?",
+        answers: ["Amazonas", "Nilo", "Danubio", "Yangtsé"],
+        correct: 1
+    },
+    {
+        category: "geography",
+        difficulty: "medium",
+        question: "¿Cuál es el desierto cálido más grande del mundo?",
+        answers: ["Gobi", "Sahara", "Atacama", "Kalahari"],
+        correct: 1
+    },
+    {
+        category: "geography",
+        difficulty: "hard",
+        question: "¿Cuál es el país más pequeño del mundo?",
+        answers: ["Mónaco", "Vaticano", "San Marino", "Liechtenstein"],
+        correct: 1
+    },
+    {
+        category: "geography",
+        difficulty: "hard",
+        question: "¿Qué país tiene más husos horarios oficiales?",
+        answers: ["Rusia", "Estados Unidos", "Francia", "China"],
+        correct: 2
+    },
+    {
+        category: "geography",
+        difficulty: "god",
+        question: "¿Cuál es el lago más profundo del mundo?",
+        answers: ["Lago Superior", "Lago Victoria", "Lago Baikal", "Lago Titicaca"],
+        correct: 2
+    },
 
-  // =========================
-  // ENTRETENIMIENTO
-  // =========================
+    // =========================
+    // 🎬 ENTRETENIMIENTO
+    // =========================
 
-  {
-    category: "entertainment",
-    question: "¿Cómo se llama el mago protagonista de una famosa saga creada por J. K. Rowling?",
-    answers: ["Harry Potter", "Frodo", "Peter Pan", "Percy Jackson"],
-    correct: 0
-  },
-  {
-    category: "entertainment",
-    question: "¿Cuál de estos personajes pertenece a Disney?",
-    answers: ["Mickey Mouse", "Naruto", "Goku", "Pikachu"],
-    correct: 0
-  },
-  {
-    category: "entertainment",
-    question: "¿Cómo se llama el vaquero de Toy Story?",
-    answers: ["Buzz", "Woody", "Andy", "Rex"],
-    correct: 1
-  },
-  {
-    category: "entertainment",
-    question: "¿Qué superhéroe utiliza un escudo con una estrella?",
-    answers: ["Iron Man", "Thor", "Capitán América", "Hulk"],
-    correct: 2
-  },
-  {
-    category: "entertainment",
-    question: "¿Cómo se llama el reino de Elsa y Anna en Frozen?",
-    answers: ["Arendelle", "Narnia", "Wakanda", "Genovia"],
-    correct: 0
-  },
-  {
-    category: "entertainment",
-    question: "¿Cuál de estos personajes es amarillo y vive en Fondo de Bikini?",
-    answers: ["Shrek", "Bob Esponja", "Garfield", "Scooby-Doo"],
-    correct: 1
-  },
-  {
-    category: "entertainment",
-    question: "¿Qué personaje de Pokémon es conocido por ser amarillo?",
-    answers: ["Charmander", "Squirtle", "Pikachu", "Bulbasaur"],
-    correct: 2
-  },
-  {
-    category: "entertainment",
-    question: "¿Qué superhéroe es conocido como el Hombre Araña?",
-    answers: ["Superman", "Batman", "Spider-Man", "Flash"],
-    correct: 2
-  }
+    {
+        category: "entertainment",
+        difficulty: "easy",
+        question: "¿Cómo se llama el personaje principal de la saga Harry Potter?",
+        answers: ["Ron Weasley", "Harry Potter", "Draco Malfoy", "Neville Longbottom"],
+        correct: 1
+    },
+    {
+        category: "entertainment",
+        difficulty: "easy",
+        question: "¿Qué personaje vive en una piña debajo del mar?",
+        answers: ["Bob Esponja", "Patricio", "Calamardo", "Arenita"],
+        correct: 0
+    },
+    {
+        category: "entertainment",
+        difficulty: "medium",
+        question: "¿Cómo se llama el reino de Frozen?",
+        answers: ["Arendelle", "Narnia", "Wakanda", "Genovia"],
+        correct: 0
+    },
+    {
+        category: "entertainment",
+        difficulty: "medium",
+        question: "¿Quién dirigió la película Titanic de 1997?",
+        answers: ["Steven Spielberg", "James Cameron", "Christopher Nolan", "George Lucas"],
+        correct: 1
+    },
+    {
+        category: "entertainment",
+        difficulty: "medium",
+        question: "¿Qué instrumento toca principalmente el personaje de Jack en Titanic?",
+        answers: ["Violín", "Piano", "Ninguno", "Guitarra"],
+        correct: 2
+    },
+    {
+        category: "entertainment",
+        difficulty: "hard",
+        question: "¿Cuál fue la primera película de Toy Story?",
+        answers: ["Toy Story", "Toy Story 2", "Toy Story 3", "Toy Story 4"],
+        correct: 0
+    },
+    {
+        category: "entertainment",
+        difficulty: "hard",
+        question: "¿Qué actor interpretó a Iron Man en el Universo Cinematográfico de Marvel?",
+        answers: ["Chris Evans", "Robert Downey Jr.", "Chris Hemsworth", "Mark Ruffalo"],
+        correct: 1
+    },
+    {
+        category: "entertainment",
+        difficulty: "god",
+        question: "¿Qué película ganó el Óscar a mejor película en 2020?",
+        answers: ["1917", "Joker", "Parásitos", "Ford v Ferrari"],
+        correct: 2
+    },
+
+    // =========================
+    // 🎲 DESAFÍO MIXTO
+    // =========================
+    // No necesita preguntas propias.
+    // El código mezcla todas las categorías.
+
+    // =========================
+    // ➕ PREGUNTAS EXTRA
+    // =========================
+
+    {
+        category: "general",
+        difficulty: "god",
+        question: "¿Cuál es el número primo más pequeño mayor que 100?",
+        answers: ["101", "103", "107", "109"],
+        correct: 0
+    },
+
+    {
+        category: "colombia",
+        difficulty: "god",
+        question: "¿Cuál es el pico más alto de Colombia?",
+        answers: [
+            "Nevado del Ruiz",
+            "Pico Cristóbal Colón",
+            "Nevado del Tolima",
+            "Sierra Nevada del Cocuy"
+        ],
+        correct: 1
+    }
+
 ];
 
-// Disponible para el resto del juego
 window.questionBank = questions;
